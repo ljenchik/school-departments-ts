@@ -1,14 +1,16 @@
-const express = require('express')
-const cors = require('express')
+import departmentRoutes from './routes/departmentRoutes';
+import express from "express";
 
+const app = express();
 const port = process.env.PORT || 3001;
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-const app = express()
 
-app.get('/', (req: any, res: any) => {
-  res.send('Hello from backend!')
-})
 
-// Routes goes here
+app.use('/', departmentRoutes)
+
+
+
 
 app.listen(port, () => console.log(`Listening on port ${port}.`))
