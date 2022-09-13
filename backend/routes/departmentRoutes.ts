@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
+import moment from "moment";
 import { createDepartment, getAllDepartments, getDepartmentById, deleteDepartmentById, updateDepartmentName } from "../repos/departmentRepo";
-
-
 
 const router = express.Router()
 
@@ -13,16 +12,12 @@ const router = express.Router()
 
   router.get("/", async (req: Request, res: Response) => {
       const departments = await getAllDepartments();
-
       return res.json(departments);
   });
 
   router.get("/department/:id(\\d+)", async (req: Request, res: Response) => {
     var id = parseInt(req.params.id);
-      let department = await getDepartmentById(id);
-      department = department[0];
-      department.created_at = department.created_at.toISOString().split('T')[0];
-      department.updated_at = department.updated_at.toISOString().split('T')[0];
+      const department = await getDepartmentById(id);
       return res.json(department);
   });
 
@@ -32,7 +27,7 @@ const router = express.Router()
     return res.json({ success: true, error: "" });
   });
 
-  router.put("/department/:id(\\d+)/update", async (req, res) => {
+  router.put("/department/:id(\\d+)/update", async (req: Request, res: Response) => {
     var id = parseInt(req.params.id);
     const requestBody = req.body;
       await updateDepartmentName(id, requestBody.department_name, requestBody.image, requestBody.updated_at);
