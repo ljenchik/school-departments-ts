@@ -1,6 +1,6 @@
 export interface Department {
     department_name: string;
     image: string;
-    createdAt: Date;
-    updatedAt: Date;
+    created_at: string;
+    updated_at: string;
 }

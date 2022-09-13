@@ -6,12 +6,12 @@ export async function getAllDepartments(): Promise<Department[]> {
     .orderBy('department.department_name')
 }
 
-export async function getDepartmentById(id: number): Promise<Department> {
+export async function getDepartmentById(id: number): Promise<any> {
     return await knex("department")
     .where('id', id)
   }
 
-export async function createDepartment(department: { department_name: string; image: string; createdAt: Date; updatedAt: Date; }): Promise<void> {
+export async function createDepartment(department: { department_name: string; image: string; createdAt: Date; }): Promise<void> {
     const id = await knex("department")
       .insert({
         department_name: department.department_name,
@@ -21,9 +21,9 @@ export async function createDepartment(department: { department_name: string; im
     return id[0].id;
   }
 
-  export async function updateDepartmentName(id: number, department_name: string): Promise<void> {
+  export async function updateDepartmentName(id: number, department_name: string, image: string, updated_at: Date): Promise<void> {
     return await knex("department")
-      .update({department_name})
+      .update({department_name, image, updated_at})
       .where("id", id)
   }
 
