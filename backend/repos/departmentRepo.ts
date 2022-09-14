@@ -1,5 +1,5 @@
 import { knex } from "./database";
-import { Department } from "../models/departmentModel";
+import { Department } from "../responseModels/departmentModel";
 import moment from "moment";
 
 export async function getAllDepartments(): Promise<Department[]> {
@@ -24,11 +24,11 @@ export async function createDepartment(department: {
   return id[0].id;
 }
 
-export async function updateDepartmentName(
+export async function updateDepartment(
   id: number,
   department_name: string,
   image: string,
-  updated_at: moment.Moment
+  updated_at: string
 ): Promise<void> {
   return await knex("department")
     .update({ department_name, image, updated_at })
