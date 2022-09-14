@@ -1,0 +1,24 @@
+.department-data-input {
+    width: 65vw;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+ .link {
+    text-decoration: none !important;
+}
+
+.link:hover {
+    color: green !important;
+}
+ 
+.department-image {
+    width: 20%;
+    padding-bottom: 20px;
+    margin-top: 70px;
+}
+
+.update-department-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

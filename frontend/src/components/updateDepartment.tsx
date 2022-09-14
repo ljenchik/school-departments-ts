@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { getDepartmentById, updateDepartment } from "../apiClient";
 import Container from "react-bootstrap/esm/Container";
 import { UpdateDepartmentForm } from "../requestModels/departmentModels";
+import "../css/updateDepartment.css";
 
 export const UpdateDepartment = () => {
   const params = useParams();
@@ -12,7 +13,7 @@ export const UpdateDepartment = () => {
   const [department, setDepartment] = useState<UpdateDepartmentForm>({
     department_name: "",
     image: "",
-    updated_at: ""
+    updated_at: "",
   });
   const navigate = useNavigate();
 
@@ -22,29 +23,33 @@ export const UpdateDepartment = () => {
     });
   }, []);
 
-  const handleChangeDepartmentName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDepartment({... department, department_name :  event.target.value});
+  const handleChangeDepartmentName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDepartment({ ...department, department_name: event.target.value });
   };
 
-  const handleChangeDepartmentImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDepartment({... department, image:  event.target.value});
+  const handleChangeDepartmentImage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDepartment({ ...department, image: event.target.value });
   };
 
   const submit = () => {
     const request: UpdateDepartmentForm = {
-        department_name: "",
-        image: "",
-        updated_at: ""
+      department_name: "",
+      image: "",
+      updated_at: "",
     };
-      request.department_name = department.department_name;
-      request.image = department.image;
-      request.updated_at = (new Date()).toISOString();
-      updateDepartment(Number(department_id), request).then((response) => {
-        navigate(`/department/${department_id}`);
-      })
+    request.department_name = department.department_name;
+    request.image = department.image;
+    request.updated_at = new Date().toISOString();
+    updateDepartment(Number(department_id), request).then((response) => {
+      navigate(`/department/${department_id}`);
+    });
   };
 
-  const handleKeyPress = (event: { keyCode: number; }) => {
+  const handleKeyPress = (event: { keyCode: number }) => {
     if (event.keyCode === 13) {
       submit();
     }
@@ -55,31 +60,36 @@ export const UpdateDepartment = () => {
   } else {
     return (
       <Container>
-        <h4 className="title">Update department name </h4>
+        <img className="department-image" src={department.image}/><br />
+        <h4 className="update-department-title">{department.department_name}</h4>
+        <label>Update department name</label>
+        <br />
         <input
-          className="input-data"
+          className="department-data-input"
           type="text"
           value={department.department_name}
           onChange={(event) => handleChangeDepartmentName(event)}
         ></input>
-
-<input
-          className="input-data"
-          type="text"
+        <br />
+        <label>Update department logo</label>
+        <br />
+        <input
+          className="department-data-input"
+          type="url"
           value={department.image}
           onChange={(event) => handleChangeDepartmentImage(event)}
         ></input>
+        <br />
 
-        
-            <Button
-              className="mx-2 my-3"
-              onKeyDown={handleKeyPress}
-              onClick={submit}
-            >
-              Save
-            </Button>
-              
-        <Link to="/department" className="view-all-dep-link">
+        <Button
+          className="my-3"
+          onKeyDown={handleKeyPress}
+          onClick={submit}
+        >
+          Save
+        </Button>
+        <br/>
+        <Link to="/" className="link">
           View all departments
         </Link>
       </Container>

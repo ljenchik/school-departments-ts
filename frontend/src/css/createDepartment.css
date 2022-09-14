@@ -1,0 +1,22 @@
+
+.dep-name-input {
+    width: 60vw;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+ .error-message {
+    margin-left: 20px;
+    align-self: center;
+ }
+.title {
+    margin-top: 70px;
+}
+ .link {
+    text-decoration: none !important;
+}
+
+.link:hover {
+    color: green !important;
+}
+ 

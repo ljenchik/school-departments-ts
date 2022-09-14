@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
 import { CreateDepartmentForm } from "../requestModels/departmentModels";
 import { useNavigate } from "react-router-dom";
+import "../css/createDepartment.css"
 
 
 export const CreateDepartment = () => {
@@ -60,8 +61,8 @@ export const CreateDepartment = () => {
             <label>
               <input
                 className="dep-name-input"
-                type="text"
-                placeholder="Enter image url"
+                type="url"
+                placeholder="http://image.jpg"
                 value={department.image}
                 onChange={(event) => handleChangeDepartmentImage(event)}
               ></input>
@@ -69,7 +70,7 @@ export const CreateDepartment = () => {
           </div>
 
             <Button
-              className="btn btn-success my-3 mx-2"
+              className="btn btn-success my-3"
               onKeyDown={handleKeyPress}
               onClick={submit}
             >
@@ -79,7 +80,7 @@ export const CreateDepartment = () => {
         </fieldset>
         <br />
         <div>
-          <Link to="/department" className="link">
+          <Link to="/" className="link">
             {" "}
             View all departments{" "}
           </Link>
