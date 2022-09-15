@@ -4,13 +4,20 @@ import { getDepartmentById, deleteDepartmentById } from "../apiClient";
 import Container from "react-bootstrap/esm/Container";
 import "../css/getDepartmentById.css";
 import { Button } from "react-bootstrap";
+import { confirm } from "react-confirm-box";
+import { Options } from "react-confirm-box/dist/types";
 
 export const GetDepartmentById = () => {
   const params = useParams();
   const department_id: string | undefined = params.id;
   const [department, setDepartment] = useState<any>({});
   const [error, setError] = useState("");
-
+  const options = {
+    labels: {
+      confirmable: "Yes",
+      cancellable: "No"
+    }
+  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,14 +34,20 @@ export const GetDepartmentById = () => {
     department.updated_at = department.updated_at.split("T")[0];
   }
 
-  const deleteDepartment = () => {
-    deleteDepartmentById(Number(department_id)).then((response) => {
-      if (response.success === true) {
-        navigate("/");
-      } else {
-        setError("You can't delete department with employees");
+  const deleteDepartment = async () => {
+      const result = await confirm(`Are you sure you want to delete ${department.department_name}?`, options);
+      if (result) {
+        deleteDepartmentById(Number(department_id)).then((response) => {
+          if (response.success === true) {
+            navigate("/");
+          } else {
+            setError("You can't delete department with employees");
+          }
+        });
       }
-    });
+      else {
+        navigate(`/department/${department_id}`);
+      }
   };
 
   const updateDepartment = () => {
