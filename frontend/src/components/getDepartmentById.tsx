@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getDepartmentById, deleteDepartmentById } from "../apiClient";
 import Container from "react-bootstrap/esm/Container";
@@ -30,7 +30,7 @@ export const GetDepartmentById = () => {
   const deleteDepartment = () => {
     deleteDepartmentById(Number(department_id)).then((response) => {
       if (response.success === true) {
-        navigate("/department");
+        navigate("/");
       } else {
         setError("You can't delete department with employees");
       }
@@ -51,11 +51,16 @@ export const GetDepartmentById = () => {
         </div>
         <br />
         <p className="info">Created on {department.created_at}</p>
-        <p className="info">Updated on {department.updated_at}</p>
+        {department.updated_at ? (
+          <p className="info">Updated on {department.updated_at}</p>
+        ) : (
+          ""
+        )}
+
         <div className="d-flex flex-row">
           <div>
             <Button className="btn btn-success my-4" onClick={updateDepartment}>
-              Edit
+              Update
             </Button>
           </div>
           <div>
@@ -64,6 +69,11 @@ export const GetDepartmentById = () => {
             </Button>
           </div>
         </div>
+        <br />
+        <Link to="/" className="link">
+          {" "}
+          View all departments{" "}
+        </Link>
       </Container>
     </div>
   );

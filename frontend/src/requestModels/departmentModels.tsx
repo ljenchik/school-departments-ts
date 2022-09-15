@@ -9,3 +9,4 @@ export interface UpdateDepartmentForm {
     image: string;
     updated_at: string;
 }
+

@@ -3,9 +3,26 @@ const baseurl = process.env["REACT_APP_BACKEND_DOMAIN"];
 
 
 export async function getAllDepartments() {
-  const response = await fetch(`${baseurl}`);
-  console.log(response);
-  return await response.json();
+  try {
+    const response = await fetch(`${baseurl}`);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data.departments);
+      if (data.success) {
+        console.log(data.departments);
+        return {departments: data.departments, success: data.success, error: data.error };
+      }
+      else {
+        return {departments: [], success: false, error: "There are no departments" };
+      }
+    }
+    else {
+      const error = await response.text();
+      return {departments: [],  success: false, error: error };
+    }
+  } catch (e) {
+    return {departments: [],  success: false, error: e };
+  }
 }
 
 export async function getDepartmentById(id: number) {

@@ -30,7 +30,7 @@ export const CreateDepartment = () => {
       request.department_name = department.department_name;
       request.image = department.image;
       createDepartment(request).then((response) => {
-        navigate(`/department`);
+        navigate(`/`);
       })
   };
 
