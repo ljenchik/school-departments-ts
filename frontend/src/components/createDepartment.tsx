@@ -6,8 +6,12 @@ import Container from "react-bootstrap/esm/Container";
 import { CreateDepartmentForm } from "../requestModels/departmentModels";
 import { useNavigate } from "react-router-dom";
 import "../css/createDepartment.css";
+import { validateImage } from "image-validator";
 
-var validateImageUrl = new RegExp('([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))');
+const urlValidation = async (url: string) => {
+  const isValidImage = await validateImage(url);
+  return isValidImage;
+}
 
 export const CreateDepartment = () => {
   const [department, setDepartment] = useState<CreateDepartmentForm>({
@@ -30,7 +34,7 @@ export const CreateDepartment = () => {
     setError("");
   };
 
-  const submit = () => {
+  const submit = async () => {
     const request: CreateDepartmentForm = {
       department_name: "",
       image: "",
@@ -41,7 +45,7 @@ export const CreateDepartment = () => {
     if (!request.department_name) {
       setError("Enter department name");
     } else {
-      if (validateImageUrl.test(department.image) && department.image) {
+      if (await urlValidation(department.image) && department.image) {
         request.image = department.image;
         createDepartment(request).then((response) => {
           navigate(`/`);
@@ -54,7 +58,7 @@ export const CreateDepartment = () => {
           navigate(`/`);
         }
       )}
-      else if (validateImageUrl.test(department.image) === false) {
+      else if (await urlValidation(department.image) === false) {
         setError("Enter a valid image url");
       }
     }
