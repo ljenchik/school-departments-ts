@@ -1,13 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef} from "react";
 import Button from "react-bootstrap/Button";
 import { getDepartmentById, updateDepartment } from "../apiClient";
 import Container from "react-bootstrap/esm/Container";
 import { UpdateDepartmentForm } from "../requestModels/departmentModels";
 import "../css/updateDepartment.css";
+import { validateImage } from "image-validator";
+
+const urlValidation = async (url: string) => {
+  const isValidImage = await validateImage(url);
+  return isValidImage;
+}
 
 export const UpdateDepartment = () => {
+
   const params = useParams();
   const department_id: string | undefined = params.id;
   const [department, setDepartment] = useState<UpdateDepartmentForm>({
@@ -15,6 +22,12 @@ export const UpdateDepartment = () => {
     image: "",
     updated_at: "",
   });
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const defaultImage = "https://seekvectorlogo.net/wp-content/uploads/2019/03/department-for-education-vector-logo.png";
+  const [displayImage, setDisplayImage] = useState<string>(department.image);
+  const [isValidImage, setIsValidImage] = useState<boolean>(true);
+  const [error, setError] = useState("");
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,26 +40,59 @@ export const UpdateDepartment = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setDepartment({ ...department, department_name: event.target.value });
+    setError("");
   };
 
-  const handleChangeDepartmentImage = (
+  const handleChangeDepartmentImage = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setDepartment({ ...department, image: event.target.value });
+    department.image = event.target.value;
+    const isValidImage = await urlValidation(event.target.value);
+    
+      if (department.image !== "" && isValidImage === false) {
+        setError("Invalid image url");
+        setIsValidImage(false);
+        setDisplayImage(defaultImage);
+        setIsDisabled(true);
+      }
+      else if (department.image === "" && isValidImage === false) {
+        setError("");
+        setIsValidImage(false);
+        setDisplayImage(defaultImage);
+        setIsDisabled(false);
+      }
+      else {
+        setIsValidImage(true);
+        setDisplayImage(department.image);
+        setIsDisabled(false);
+        setError("")
+      }
+
+      
+      setDepartment({ ...department, image: department.image });
   };
 
-  const submit = () => {
+  const submit = async () => {
     const request: UpdateDepartmentForm = {
       department_name: "",
       image: "",
       updated_at: "",
     };
-    request.department_name = department.department_name;
-    request.image = department.image;
-    request.updated_at = new Date().toISOString();
-    updateDepartment(Number(department_id), request).then((response) => {
-      navigate(`/department/${department_id}`);
-    });
+
+    
+    if (!department.department_name) {
+      setError("Enter department name");
+    } else {
+      request.department_name = department.department_name;
+      request.updated_at = new Date().toISOString();
+      request.image = displayImage;
+      
+
+      updateDepartment(Number(department_id), request).then((response) => {
+        navigate(`/department/${department_id}`);
+      })
+
+    }
   };
 
   const handleKeyPress = (event: { keyCode: number }) => {
@@ -60,8 +106,8 @@ export const UpdateDepartment = () => {
   } else {
     return (
       <Container>
-        <img className="department-image" src={department.image}/><br />
-        <h4 className="update-department-title">{department.department_name}</h4>
+        {/* <img className="department-image" src={department.image}/><br /> */}
+        {!isValidImage ? <img className="department-image" src={displayImage} /> : <img className="department-image" src={department.image} /> } <br />
         <label>Update department name</label>
         <br />
         <input
@@ -76,18 +122,29 @@ export const UpdateDepartment = () => {
         <input
           className="department-data-input"
           type="url"
+          //defaultValue={prevImage}
           value={department.image}
           onChange={(event) => handleChangeDepartmentImage(event)}
         ></input>
         <br />
-
+        <div className="d-flex">
         <Button
           className="my-3"
           onKeyDown={handleKeyPress}
           onClick={submit}
+          disabled={isDisabled}
         >
           Save
         </Button>
+
+        {error !== "" ? (
+              <p className="error-message" style={{ color: "red" }}>
+                {error}
+              </p>
+            ) : (
+              ""
+            )}
+            </div>
         <br/>
         <Link to="/" className="link">
           View all departments
@@ -96,3 +153,4 @@ export const UpdateDepartment = () => {
     );
   }
 };
+

@@ -5,7 +5,6 @@ import Container from "react-bootstrap/esm/Container";
 import "../css/getDepartmentById.css";
 import { Button } from "react-bootstrap";
 import { confirm } from "react-confirm-box";
-import { Options } from "react-confirm-box/dist/types";
 
 export const GetDepartmentById = () => {
   const params = useParams();
