@@ -1,4 +1,4 @@
-  export interface Employee {
+export interface Employee {
     id : number,
     name: string;
     role: string;
@@ -11,5 +11,6 @@
     photo: string;
     updated_at: string | null;
     created_at: string | null;
-    department_id: number
+    department_id: number;
+    department_name: string;
   }

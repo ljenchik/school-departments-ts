@@ -1,0 +1,17 @@
+.add-dep-label {
+    color: green;
+    margin-left: 5px;
+    padding-right: 10px;
+    font-size: 20px;
+}
+
+.select-department{
+    padding: 5px;
+    margin-left: 10px;
+    width: 40vw;
+}
+
+.title {
+    margin-top: 70px;
+    padding-left: 12px;
+}

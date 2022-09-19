@@ -1,3 +1,6 @@
+import Knex from "knex";
+import config from "../database/knexfile";
+
 const environment = process.env.ENVIRONMENT || "development";
-const config = require("../database/knexfile.ts")[environment];
-export const knex = require("knex")(config);
+
+export const knex = Knex(config[environment]);

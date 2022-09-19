@@ -1,13 +1,4 @@
-
-/**
- * @type { Object.<string, import("knex").Knex.Config> }
- */
- require('ts-node/register');
-
- const environment = process.env.NODE_ENV || 'development'
-
-module.exports = {
-
+const config:{[name: string]: any} = {
   development: {
     client: "pg",
     connection: {
@@ -16,4 +7,6 @@ module.exports = {
       password: "1234"
     }
   }
-};
+}
+
+export default config;

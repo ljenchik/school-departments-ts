@@ -6,14 +6,17 @@ import { GetDepartmentById } from './components/getDepartmentById';
 import { CreateDepartment } from './components/createDepartment';
 import { UpdateDepartment } from './components/updateDepartment';
 import { Menu } from './components/navbar';
+
+
 const Paths = () => {
   return (
     <Routes>
       <Route path="/" element={<GetAllDepartments />}></Route>
       <Route path="/department/:id" element={<GetDepartmentById />}></Route>
-      <Route path="/employees" element={<GetAllEmployees />}></Route>
+      <Route path="/employee" element={<GetAllEmployees />}></Route>
       <Route path="/department/create" element={<CreateDepartment />}></Route>
       <Route path="/department/:id/update" element={<UpdateDepartment />}></Route>
+     {/* <Route path="/employee/:id" element={<GetEmloyeeById />}></Route> */}
     </Routes>
   );
 };

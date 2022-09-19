@@ -8,6 +8,8 @@
       "dom.iterable",
       "esnext"
     ],
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,6 +21,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    
     "jsx": "react-jsx"
   },
   "include": [

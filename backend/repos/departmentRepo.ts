@@ -29,7 +29,7 @@ export async function updateDepartment(
   department_name: string,
   image: string,
   updated_at: string
-): Promise<void> {
+): Promise<number> {
   return await knex("department")
     .update({ department_name, image, updated_at })
     .where("id", id);
