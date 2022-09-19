@@ -1,7 +1,7 @@
 import { knex } from "./database";
-import { Employee } from "../responseModels/employeeModel";
+import { GetEmployee, CreateEmployee} from "../models/employeeModel";
 
-export async function getAllEmployees(): Promise<Employee[]> {
+export async function getAllEmployees(): Promise<GetEmployee[]> {
     return (
       await knex.raw(
         "select e.*, d.department_name from employee e\
@@ -10,7 +10,7 @@ export async function getAllEmployees(): Promise<Employee[]> {
     ).rows;
   }
 
-export async function getEmployeeById(id: number): Promise<Employee[]> {
+export async function getEmployeeById(id: number): Promise<GetEmployee[]> {
   return (
     await knex.raw(
       "select e.*, d.department_name from employee e\
@@ -33,42 +33,53 @@ export async function getEmployeeById(id: number): Promise<Employee[]> {
 //   ).rows;
 // }
 
-// export async function createEmployee(employee: Employee): Promise<void> {
-//   const id = await knex("employee")
-//     .insert({
-//       name: employee.name,
-//       role: employee.role,
-//       dob: employee.dob,
-//       address: employee.address,
-//       phone: employee.phone,
-//       email: employee.email,
-//       start_date: employee.start_date,
-//       salary: employee.salary,
-//       photo: employee.photo,
-//       department_id: employee.department_id,
-//       updeated_at: ""
-//     })
-//     .returning("id");
+export async function createEmployee(department_id: number, employee: CreateEmployee): Promise<void> {
+  const id = await knex("employee")
+    .insert({
+      name: employee.name,
+      role: employee.role,
+      dob: employee.dob,
+      address: employee.address,
+      phone: employee.phone,
+      email: employee.email,
+      start_date: employee.start_date,
+      salary: employee.salary,
+      photo: employee.photo,
+      department_id: department_id,
+    })
+    .returning("id");
 
-//   return id[0].id;
-// }
+  return id[0].id;
+}
 
-// // export async function updateEmployee(
-// //     employee: Employee): Promise<void> {
-// //   return await knex("employee")
-// //     .update({name,
-// //         role,
-// //       dob,
-// //       adcdress,
-// //       phone,
-// //       email,
-// //       salary,
-// //       start_date,
-// //       updated_at,
-// //       photo
-// //     })
-// //     .where({ id });
-// // }
+export async function updateEmployee(
+  id: number,
+  name: string,
+  role: string,
+  dob: Date,
+  address: string,
+  phone: string,
+  email: string,
+  salary: number,
+  start_date: Date,
+  photo: string,
+  updated_at: string
+) {
+  return await knex("employee")
+    .update({
+      name,
+      role,
+      dob,
+      address,
+      phone,
+      email,
+      salary,
+      start_date,
+      photo,
+      updated_at
+    })
+    .where({ id });
+}
 
 // export async function deleteEmployeeById(id: number): Promise<void> {
 //   await knex("employee").where("id", id).del();

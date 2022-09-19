@@ -2,6 +2,7 @@ import {
   CreateDepartmentForm,
   UpdateDepartmentForm,
 } from "./requestModels/departmentModels";
+import { Employee } from "./responseModels/employeeModel";
 const baseurl = process.env["REACT_APP_BACKEND_DOMAIN"];
 
 export async function getAllDepartments() {
@@ -123,11 +124,11 @@ export async function getAllEmployeesByDob(from, to) {
 }
 
 export async function getEmployeesByDepartmentId(id) {
-  const response = await fetch(`${baseurl}/department/${id}/employee`);
+  const response = await fetch(`${baseurl}/department/${id}/employee`); 
   return await response.json();
 }
 
-export async function createEmployee(department_id, employee) {
+export async function createEmployee(department_id: number, employee: Employee) {
   try {
     const response = await fetch(
       `${baseurl}/department/${department_id}/employee/create`,
@@ -165,7 +166,7 @@ export async function createEmployee(department_id, employee) {
   }
 }
 
-export async function editEmployee(id, updatedEmployee) {
+export async function updateEmployee(id: number, updatedEmployee: UpdateEmployeeForm) {
   try {
     const response = await fetch(`${baseurl}/employee/${id}/edit`, {
       method: "PUT",

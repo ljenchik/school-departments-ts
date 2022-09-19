@@ -1,8 +1,7 @@
 import express, { Request, Response } from "express";
 import { createDepartment, getAllDepartments,  deleteDepartmentById, updateDepartment, getDepartmentById } from "../repos/departmentRepo";
-import { getAllEmployees, getEmployeeById} from "../repos/employeeRepo";
-import { Employee } from "../responseModels/employeeModel";
-
+import { createEmployee, getAllEmployees, getEmployeeById, updateEmployee} from "../repos/employeeRepo";
+ 
 const router = express.Router()
 
   router.post("/department/create", async (req: Request, res: Response) => {
@@ -80,7 +79,7 @@ router.get("/employee", async (_req : Request, res: Response) => {
  router.get("/employee/:id(\\d+)",  async (req: Request, res: Response) => {
    const id = parseInt(req.params.id);
    try {
-    const employee: Employee[] = await getEmployeeById(id);
+    const employee = await getEmployeeById(id);
     return res.json(employee);
    }
     catch (error) {
@@ -88,8 +87,6 @@ router.get("/employee", async (_req : Request, res: Response) => {
       return res.send(error);
     }
 });
-
-
 
 // router.get("/department/:id(\\d+)/employee",  async (req: Request, res: Response) => {
 //   var id = parseInt(req.params.id);
@@ -99,30 +96,66 @@ router.get("/employee", async (_req : Request, res: Response) => {
 //   return res.json(employees);
 // });
 
+router.post("/department/:id/employee/create",  async (req: Request, res: Response) => {
+  const requestBody = req.body;
+  var department_id = parseInt(req.params.id);
+  //var validationResult = requestValidation(requestBody);
+  //if (!validationResult.success) {
+    //res.status(500);
+    //return res.json(validationResult.error);
+// } else {
+    try {
+     const phone = requestBody.phone.replace(/\s/g, '');
+      requestBody.phone = phone.slice(0, 3) + " " + phone.slice(3, 7) + " " + phone.slice(7, 13);
+      const employeeId = await createEmployee(department_id, requestBody);
+      return res.json({
+        success: true,
+        employee_id: employeeId,
+        department_id: department_id
+      });
+    } catch (e) {
+      res.status(500);
+      return res.send(e);
+    }
+  //}
+});
 
-// router.post("/department/:id/employee/create",  async (req: Request, res: Response) => {
-//   const requestBody = req.body;
-//   var department_id = parseInt(req.params.id);
-//   //var validationResult = requestValidation(requestBody);
-//   //if (!validationResult.success) {
-//     //res.status(500);
-//     //return res.json(validationResult.error);
-//  // } else {
-//     //try {
-//      // const phone = requestBody.phone.replace(/\s/g, '');
-//       //requestBody.phone = phone.slice(0, 3) + " " + phone.slice(3, 7) + " " + phone.slice(7, 13);
-//       const employeeId = await createEmployee(requestBody);
-//       return res.json({
-//         success: true,
-//         employee_id: employeeId,
-//         department_id: department_id
-//       });
-//   //   } catch (e) {
-//   //     res.status(500);
-//   //     return res.send(e.toString());
-//   //   }
-//   // }
-// });
+router.put("/employee/:id(\\d+)/update", async (req, res) => {
+  var id = parseInt(req.params.id);
+  const requestBody = req.body;
+  // var validationResult = requestValidation(requestBody);
+  // if (!validationResult.success) {
+  //   res.status(500);
+  //   return res.json(validationResult.error);
+  // } else {
+    try {
+      const phone = requestBody.phone.replace(/\s/g, '');
+      requestBody.phone = phone.slice(0, 3) + " " + phone.slice(3, 7) + " " + phone.slice(7, 13);
+      await updateEmployee(
+        id,
+        requestBody.name,
+        requestBody.role,
+        requestBody.dob,
+        requestBody.address,
+        requestBody.phone,
+        requestBody.email,
+        requestBody.salary,
+        requestBody.start_date,
+        requestBody.photo,
+        requestBody.updated_at
+      );
+      return res.json({
+        success: true,
+      });
+    } catch (e) {
+      res.status(500);
+      return res.send(e);
+    }
+  //}
+});
+
+
+
 
 
 export default router;

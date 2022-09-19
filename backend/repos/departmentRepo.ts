@@ -1,5 +1,5 @@
 import { knex } from "./database";
-import { Department } from "../responseModels/departmentModel";
+import { Department } from "../models/departmentModel";
 import moment from "moment";
 
 export async function getAllDepartments(): Promise<Department[]> {
