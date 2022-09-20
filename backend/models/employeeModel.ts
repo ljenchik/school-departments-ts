@@ -14,20 +14,6 @@ import moment from "moment";
     created_at: moment.Moment;
   }
 
-  //Model for update employee 
-  export interface UpdateEmployee {
-    name: string;
-    role: string;
-    dob: Date;
-    address: string;
-    phone: string;
-    email: string;
-    start_date: Date;
-    salary: number;
-    photo: string;
-    updated_at: string | null;
-  }
-
   //Model for get employee 
   export interface GetEmployee {
     id: number;

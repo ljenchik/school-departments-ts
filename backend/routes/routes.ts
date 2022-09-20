@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { createDepartment, getAllDepartments,  deleteDepartmentById, updateDepartment, getDepartmentById } from "../repos/departmentRepo";
-import { createEmployee, getAllEmployees, getEmployeeById, updateEmployee} from "../repos/employeeRepo";
+import { createEmployee, deleteEmployeeById, getAllEmployees, getEmployeeById, getEmployeesByDepartmentId, updateEmployee} from "../repos/employeeRepo";
  
 const router = express.Router()
 
@@ -88,13 +88,13 @@ router.get("/employee", async (_req : Request, res: Response) => {
     }
 });
 
-// router.get("/department/:id(\\d+)/employee",  async (req: Request, res: Response) => {
-//   var id = parseInt(req.params.id);
-//   const employees = await getEmployeesByDepartmentId(id);
-//   for (var i = 0; i < employees.length; i++) {
-//   }
-//   return res.json(employees);
-// });
+router.get("/department/:id(\\d+)/employee",  async (req: Request, res: Response) => {
+  var id = parseInt(req.params.id);
+  const employees = await getEmployeesByDepartmentId(id);
+  for (var i = 0; i < employees.length; i++) {
+  }
+  return res.json(employees);
+});
 
 router.post("/department/:id/employee/create",  async (req: Request, res: Response) => {
   const requestBody = req.body;
@@ -120,7 +120,7 @@ router.post("/department/:id/employee/create",  async (req: Request, res: Respon
   //}
 });
 
-router.put("/employee/:id(\\d+)/update", async (req, res) => {
+router.put("/employee/:id(\\d+)/update", async (req: Request, res: Response) => {
   var id = parseInt(req.params.id);
   const requestBody = req.body;
   // var validationResult = requestValidation(requestBody);
@@ -155,6 +155,11 @@ router.put("/employee/:id(\\d+)/update", async (req, res) => {
 });
 
 
+router.delete("/employee/:id(\\d+)/delete", async (req, res) => {
+  var id = parseInt(req.params.id);
+  await deleteEmployeeById(id);
+  res.sendStatus(200);
+});
 
 
 

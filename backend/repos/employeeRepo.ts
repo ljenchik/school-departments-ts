@@ -21,17 +21,17 @@ export async function getEmployeeById(id: number): Promise<GetEmployee[]> {
   ).rows;
 }
 
-// export async function getEmployeesByDepartmentId(id: string | number):Promise<Employee[]> {
-//   return (
-//     await knex.raw(
-//       "select e.*, d.department_name from employee e\
-//     join department d on d.id=e.department_id\
-//     where e.department_id= " +
-//         id +
-//         "order By e.name"
-//     )
-//   ).rows;
-// }
+export async function getEmployeesByDepartmentId(id: string | number):Promise<GetEmployee[]> {
+  return (
+    await knex.raw(
+      "select e.*, d.department_name from employee e\
+    join department d on d.id=e.department_id\
+    where e.department_id= " +
+        id +
+        "order By e.name"
+    )
+  ).rows;
+ }
 
 export async function createEmployee(department_id: number, employee: CreateEmployee): Promise<void> {
   const id = await knex("employee")
@@ -81,6 +81,6 @@ export async function updateEmployee(
     .where({ id });
 }
 
-// export async function deleteEmployeeById(id: number): Promise<void> {
-//   await knex("employee").where("id", id).del();
-// }
+export async function deleteEmployeeById(id: number): Promise<void> {
+  await knex("employee").where("id", id).del();
+}
