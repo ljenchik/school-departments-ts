@@ -3,10 +3,10 @@ import { createDepartment } from "../apiClient";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
-import { CreateDepartmentForm } from "../requestModels/departmentModels";
 import { useNavigate } from "react-router-dom";
 import "../css/createDepartment.css";
 import { validateImage } from "image-validator";
+import { CreateDepartmentForm } from "../models/departmentModels";
 
 const urlValidation = async (url: string) => {
   const isValidImage = await validateImage(url);

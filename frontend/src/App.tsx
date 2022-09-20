@@ -6,6 +6,9 @@ import { GetDepartmentById } from './components/getDepartmentById';
 import { CreateDepartment } from './components/createDepartment';
 import { UpdateDepartment } from './components/updateDepartment';
 import { Menu } from './components/navbar';
+import { CreateEmployee } from "./components/createEmployee";
+import { GetEmployeeById } from "./components/getEmployeeById";
+import { UpdateEmployee } from "./components/updateEmployee";
 
 
 const Paths = () => {
@@ -16,7 +19,9 @@ const Paths = () => {
       <Route path="/employee" element={<GetAllEmployees />}></Route>
       <Route path="/department/create" element={<CreateDepartment />}></Route>
       <Route path="/department/:id/update" element={<UpdateDepartment />}></Route>
-     {/* <Route path="/employee/:id" element={<GetEmloyeeById />}></Route> */}
+       <Route path="/employee/:id" element={<GetEmployeeById />}></Route>
+      <Route path="/department/:id/employee/create" element={<CreateEmployee />}></Route>
+      <Route path="/employee/:id/update" element={<UpdateEmployee />}></Route>
     </Routes>
   );
 };

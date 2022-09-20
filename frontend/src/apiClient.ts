@@ -1,8 +1,9 @@
 import {
   CreateDepartmentForm,
   UpdateDepartmentForm,
-} from "./requestModels/departmentModels";
-import { Employee } from "./responseModels/employeeModel";
+} from "./models/departmentModels";
+import { CreateEmployeeForm, UpdateEmployeeForm } from "./models/employeeModel";
+
 const baseurl = process.env["REACT_APP_BACKEND_DOMAIN"];
 
 export async function getAllDepartments() {
@@ -111,24 +112,19 @@ export async function getAllEmployees() {
   }
 }
 
-export async function getEmployeeById(id) {
+export async function getEmployeeById(id: number) {
   const response = await fetch(`${baseurl}/employee/${id}`);
   return await response.json();
 }
 
-export async function getAllEmployeesByDob(from, to) {
-  const response = await fetch(
-    `${baseurl}/employee/search?from=${from}&to=${to}`
-  );
-  return await response.json();
-}
 
-export async function getEmployeesByDepartmentId(id) {
+
+export async function getEmployeesByDepartmentId(id: number) {
   const response = await fetch(`${baseurl}/department/${id}/employee`); 
   return await response.json();
 }
 
-export async function createEmployee(department_id: number, employee: Employee) {
+export async function createEmployee(department_id: number, employee: CreateEmployeeForm) {
   try {
     const response = await fetch(
       `${baseurl}/department/${department_id}/employee/create`,
@@ -168,7 +164,7 @@ export async function createEmployee(department_id: number, employee: Employee) 
 
 export async function updateEmployee(id: number, updatedEmployee: UpdateEmployeeForm) {
   try {
-    const response = await fetch(`${baseurl}/employee/${id}/edit`, {
+    const response = await fetch(`${baseurl}/employee/${id}/update`, {
       method: "PUT",
       body: JSON.stringify(updatedEmployee),
       headers: {
@@ -197,7 +193,7 @@ export async function updateEmployee(id: number, updatedEmployee: UpdateEmployee
   }
 }
 
-export async function deleteEmployeeById(id) {
+export async function deleteEmployeeById(id: number) {
   const response = await fetch(`${baseurl}/employee/${id}/delete`, {
     method: "DELETE",
     headers: {

@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef} from "react";
 import Button from "react-bootstrap/Button";
 import { getDepartmentById, updateDepartment } from "../apiClient";
 import Container from "react-bootstrap/esm/Container";
-import { UpdateDepartmentForm } from "../requestModels/departmentModels";
+import { UpdateDepartmentForm } from "../models/departmentModels";
 import "../css/updateDepartment.css";
 import { validateImage } from "image-validator";
 

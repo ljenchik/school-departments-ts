@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { createDepartment, getAllDepartments,  deleteDepartmentById, updateDepartment, getDepartmentById } from "../repos/departmentRepo";
 import { createEmployee, deleteEmployeeById, getAllEmployees, getEmployeeById, getEmployeesByDepartmentId, updateEmployee} from "../repos/employeeRepo";
+import { requestValidation } from "../requestValidation";
  
 const router = express.Router()
 
@@ -99,11 +100,11 @@ router.get("/department/:id(\\d+)/employee",  async (req: Request, res: Response
 router.post("/department/:id/employee/create",  async (req: Request, res: Response) => {
   const requestBody = req.body;
   var department_id = parseInt(req.params.id);
-  //var validationResult = requestValidation(requestBody);
-  //if (!validationResult.success) {
-    //res.status(500);
-    //return res.json(validationResult.error);
-// } else {
+  var validationResult = requestValidation(requestBody);
+  if (!validationResult.success) {
+    res.status(500);
+    return res.json(validationResult.error);
+} else {
     try {
      const phone = requestBody.phone.replace(/\s/g, '');
       requestBody.phone = phone.slice(0, 3) + " " + phone.slice(3, 7) + " " + phone.slice(7, 13);
@@ -117,17 +118,17 @@ router.post("/department/:id/employee/create",  async (req: Request, res: Respon
       res.status(500);
       return res.send(e);
     }
-  //}
+  }
 });
 
 router.put("/employee/:id(\\d+)/update", async (req: Request, res: Response) => {
   var id = parseInt(req.params.id);
   const requestBody = req.body;
-  // var validationResult = requestValidation(requestBody);
-  // if (!validationResult.success) {
-  //   res.status(500);
-  //   return res.json(validationResult.error);
-  // } else {
+  var validationResult = requestValidation(requestBody);
+  if (!validationResult.success) {
+    res.status(500);
+    return res.json(validationResult.error);
+  } else {
     try {
       const phone = requestBody.phone.replace(/\s/g, '');
       requestBody.phone = phone.slice(0, 3) + " " + phone.slice(3, 7) + " " + phone.slice(7, 13);
@@ -151,7 +152,7 @@ router.put("/employee/:id(\\d+)/update", async (req: Request, res: Response) => 
       res.status(500);
       return res.send(e);
     }
-  //}
+  }
 });
 
 
@@ -160,7 +161,6 @@ router.delete("/employee/:id(\\d+)/delete", async (req, res) => {
   await deleteEmployeeById(id);
   res.sendStatus(200);
 });
-
 
 
 export default router;

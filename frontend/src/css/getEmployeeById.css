@@ -1,0 +1,51 @@
+.employee-photo {
+    width: 25vw;
+    height: auto;
+    margin-top: 80px;
+}
+   
+.row {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+.column {
+    flex:50%;
+    padding: 5px;
+  }
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-left {
+    width: 30%;
+}
+
+.flex-right {
+    width: 70%;
+    margin-top: 80px;
+    margin-left: 20px;
+}
+
+.link {
+    text-decoration: none !important;
+}
+
+.link:hover {
+    color: green !important;
+}
+
+.created_at {
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 0px;
+}
+
+.name {
+    font-size: 16px;
+    font-weight: 700;
+}
