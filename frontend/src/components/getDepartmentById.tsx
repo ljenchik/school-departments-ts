@@ -62,9 +62,9 @@ export const GetDepartmentById = () => {
           <h4>{department.department_name}</h4>
         </div>
         <br />
-        <p className="info">Created on {department.created_at}</p>
+        <p className="created_at">Department was created on {department.created_at}</p>
         {department.updated_at ? (
-          <p className="info">Updated on {department.updated_at}</p>
+          <p className="created_at">Updated on {department.updated_at}</p>
         ) : (
           ""
         )}

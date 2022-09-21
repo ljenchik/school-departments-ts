@@ -20,8 +20,11 @@ export const GetEmployeeById = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    getEmployeeById(Number(employee_id)).then((response) =>
-      setEmployee(response[0])
+    getEmployeeById(Number(employee_id)).then((response : Employee[]) => {
+        response[0].dob = response[0].dob.split('T')[0];
+        response[0].start_date = response[0].start_date.split('T')[0];
+        setEmployee(response[0]);
+    }
     );
   }, []);
 
@@ -36,27 +39,30 @@ export const GetEmployeeById = () => {
     });
   };
 
-  const editEmployee = () => {
+  const updateEmployee = () => {
     getEmployeeById(Number(employee_id)).then((response) =>
       navigate(`/employee/${employee_id}/update`)
     );
   };
 
+  
+
   if (employee === undefined) {
     return <div>Loading report ...</div>;
   } else {
-    if (employee.dob){
-        employee.dob = employee.dob.split('T')[0]
-    }
-    if (employee.start_date){
-        employee.start_date = employee.start_date.split('T')[0]
-    }
-    if (employee.created_at){
-        employee.created_at = employee.created_at.split('T')[0]
-    }
-    if (employee.updated_at){
-        employee.updated_at = employee.updated_at.split('T')[0]
-    }
+//     if (employee.dob){
+//         employee.dob = employee.dob.split('T')[0]
+//     }
+//     if (employee.start_date){
+//         employee.start_date = employee.start_date.split('T')[0]
+//     }
+//     if (employee.created_at){
+//         employee.created_at = employee.created_at.split('T')[0]
+//     }
+//     if (employee.updated_at){
+//         employee.updated_at = employee.updated_at.split('T')[0]
+//     }
+// }
     return (
       <Container>
         <div className="flex-container">
@@ -143,10 +149,10 @@ export const GetEmployeeById = () => {
 
         <br />
         <p className="created_at">Profile was created on {employee.created_at}</p>
-        {employee.updated_at !== null ?  <p className="created_at">and was updated on {employee.updated_at}</p> : "" }
+        {employee.updated_at !== null ?  <p className="created_at">Updated on {employee.updated_at}</p> : "" }
         <br />
         <div className="d-flex flex-row">
-          <Button className="btn btn-success my-2" onClick={editEmployee}>
+          <Button className="btn btn-success my-2" onClick={updateEmployee}>
             Update
           </Button>
           <Button className="mx-2 my-2" onClick={deleteEmployee}>
@@ -174,5 +180,5 @@ export const GetEmployeeById = () => {
         </div>
       </Container>
     );
-  }
+                  }
 };
