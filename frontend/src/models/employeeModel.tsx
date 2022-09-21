@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 export interface Employee {
-    id : number,
+    id : number | null,
     name: string;
     role: string;
     dob: string;
@@ -9,7 +9,7 @@ export interface Employee {
     phone: string;
     email: string;
     start_date: string;
-    salary: number;
+    salary: string;
     photo: string;
     updated_at: string;
     created_at: string;
@@ -17,17 +17,6 @@ export interface Employee {
     department_name: string;
 }
 
-export interface CreateEmployeeForm {
-  name: string;
-  role: string;
-  dob: string | number | readonly string[] | undefined;
-  address: string;
-  phone: string;
-  email: string;
-  start_date: string | number | readonly string[] | undefined
-  salary: string | number | readonly string[] | undefined;
-  photo: string;
-  }
   
 export interface UpdateEmployeeForm {
   name: string;

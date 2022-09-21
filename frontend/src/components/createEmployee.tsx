@@ -7,13 +7,14 @@ import { useParams } from "react-router-dom";
 import { getDepartmentById } from "../apiClient";
 import { Container } from "react-bootstrap";
 import "../css/createEmployee.css";
-import { CreateEmployeeForm } from "../models/employeeModel";
+import { Employee } from "../models/employeeModel";
 
 export const CreateEmployee = () => {
   const params = useParams();
-  const department_id = params.id;
+  const department_id = Number(params.id);
   const [departmentName, setDepartmentName]= useState("");
-  const [employee, setEmployee] = useState<CreateEmployeeForm>({
+  const [employee, setEmployee] = useState<Employee>({
+    id: null,
     name: "",
     role: "",
     dob: "",
@@ -22,7 +23,11 @@ export const CreateEmployee = () => {
     email: "",
     start_date: "",
     salary: "",
-    photo: ""
+    photo: "",
+    department_id: department_id,
+    department_name: "",
+    updated_at: "",
+    created_at: ""
   });
 
   const [error, setError] = useState("");
@@ -70,7 +75,7 @@ export const CreateEmployee = () => {
   };
 
   const handleChangeEmployeeSalary = (event: React.ChangeEvent<HTMLInputElement>) => {
-    employee.salary = parseFloat(event.target.value);
+    employee.salary = event.target.value;
     setEmployee({ ...employee });
   };
 
@@ -86,7 +91,7 @@ export const CreateEmployee = () => {
   };
 
   const reset = () => {
-    setEmployee({name: "",
+    setEmployee({ id: null, name: "",
     role: "",
     dob: "",
     address: "",
@@ -95,14 +100,19 @@ export const CreateEmployee = () => {
     start_date: "",
     salary: "",
     photo: "",
+    department_id: department_id,
+    department_name: "",
+    updated_at: "",
+    created_at: ""
     });
     setError("");
     setDisabled(false);
   };
 
   const submit = () => {
-    const request: CreateEmployeeForm = {
-        name: "",
+    const request: Employee = {
+      id: null,  
+      name: "",
         role: "",
         dob: "",
         address: "",
@@ -110,7 +120,11 @@ export const CreateEmployee = () => {
         email: "",
         start_date: "",
         salary: "",
-        photo: ""
+        photo: "",
+        department_id: department_id,
+        department_name: "",
+        updated_at: "",
+        created_at: ""
     };
     Object.entries(employee).forEach(([key, value]) => {
         request[key] = value;
@@ -119,8 +133,9 @@ export const CreateEmployee = () => {
     createEmployee(Number(department_id), request).then((response) => {
       if (!response.success) { 
         setError(response.error.slice(1, -1));
-      } else {
-        navigate(`/department/${department_id}`);
+      }
+      else {
+        navigate(`/employee/${response.id}`)
       }
     });
   };

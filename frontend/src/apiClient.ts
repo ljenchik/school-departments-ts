@@ -2,7 +2,7 @@ import {
   CreateDepartmentForm,
   UpdateDepartmentForm,
 } from "./models/departmentModels";
-import { CreateEmployeeForm, UpdateEmployeeForm } from "./models/employeeModel";
+import { Employee, UpdateEmployeeForm } from "./models/employeeModel";
 
 const baseurl = process.env["REACT_APP_BACKEND_DOMAIN"];
 
@@ -124,7 +124,7 @@ export async function getEmployeesByDepartmentId(id: number) {
 
 export async function createEmployee(
   department_id: number,
-  employee: CreateEmployeeForm
+  employee: Employee
 ) {
   try {
     const response = await fetch(
@@ -143,23 +143,24 @@ export async function createEmployee(
         return {
           success: false,
           error: data.error,
-          department_id: "",
-          employee_id: "",
+          department_id: department_id,
+          id: null
         };
       } else {
+        console.log(data);
         return {
           success: true,
           error: "",
-          department_id: data.department_id,
-          employee_id: data.employee_id,
+          department_id: department_id,
+          id: data.id
         };
       }
     } else {
       const error = await response.text();
-      return { success: false, id: "", error: error };
+      return { success: false, id: null, department_id: department_id, error: error };
     }
   } catch (e) {
-    return { success: false, id: "", error: e };
+    return { success: false, id: null, department_id: department_id, error: e };
   }
 }
 
@@ -190,10 +191,10 @@ export async function updateEmployee(
       }
     } else {
       const error = await response.text();
-      return { success: false, id: "", error: error };
+      return { success: false, error: error };
     }
   } catch (e) {
-    return { success: false, id: "", error: e };
+    return { success: false, error: e };
   }
 }
 

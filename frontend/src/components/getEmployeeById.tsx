@@ -31,7 +31,8 @@ export const GetEmployeeById = () => {
       response[0].dob = response[0].dob.split("T")[0];
       response[0].start_date = response[0].start_date.split("T")[0];
       response[0].created_at = response[0].created_at.split("T")[0];
-      response[0].updated_at = response[0].updated_at.split("T")[0];
+      if (response[0].updated_at)
+       {response[0].updated_at = response[0].updated_at.split("T")[0];}
       setEmployee(response[0]);
     });
   }, []);

@@ -111,7 +111,7 @@ router.post("/department/:id/employee/create",  async (req: Request, res: Respon
       const employeeId = await createEmployee(department_id, requestBody);
       return res.json({
         success: true,
-        employee_id: employeeId,
+        id: employeeId,
         department_id: department_id
       });
     } catch (e) {
