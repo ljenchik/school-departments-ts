@@ -1,9 +1,9 @@
 import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
-import "../css/getEmployeeTable.css";
+import "../css/employeeTable.css";
 
-export const GetEmployeeTable = ({ employees }) => {
+export const EmployeeDepartmentTable = ({ employees }) => {
   if (employees === undefined) {
     return <div style={{ color: "red" }}>Loading data ... </div>;
   }
@@ -14,11 +14,11 @@ export const GetEmployeeTable = ({ employees }) => {
     return <div style={{ color: "red" }}>There are no employees</div>;
   }
   return (
-    <Container>
+    <div className="table-container">
+        <h4>Employees</h4>
       <ReactBootStrap.Table striped bordered hover>
         <thead>
           <th>Name</th>
-          <th>Department</th>
           <th>Role</th>
         </thead>
         <tbody>
@@ -29,19 +29,11 @@ export const GetEmployeeTable = ({ employees }) => {
                   {employee.name}
                 </Link>
               </td>
-              <td>
-                <Link
-                  to={`/department/${employee.department_id}`}
-                  className="link"
-                >
-                  {employee.department_name}
-                </Link>
-              </td>
               <td>{employee.role}</td>
             </tr>
           ))}
         </tbody>
       </ReactBootStrap.Table>
-    </Container>
+    </div>
   );
 };

@@ -21,7 +21,7 @@ export async function getEmployeeById(id: number): Promise<GetEmployee[]> {
   ).rows;
 }
 
-export async function getEmployeesByDepartmentId(id: string | number):Promise<GetEmployee[]> {
+export async function getEmployeesByDepartmentId(id: number):Promise<GetEmployee[]> {
   return (
     await knex.raw(
       "select e.*, d.department_name from employee e\

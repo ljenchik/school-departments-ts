@@ -5,3 +5,7 @@
 .link:hover {
     color: green;
 }
+
+.table-container {
+    padding-left: 0px;
+}

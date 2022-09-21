@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAllEmployees} from "../apiClient";
-import { GetEmployeeTable } from "./getEmployeeTable";
+import { EmployeeTable } from "./employeeTable";
 import Container from "react-bootstrap/esm/Container";
 import { getAllDepartments } from "../apiClient";
 import { useNavigate } from "react-router-dom";
@@ -56,8 +56,8 @@ export const GetAllEmployees = () => {
   return (
     <Container>
         <h3 className="title">Employees</h3>
-        <GetEmployeeTable employees={employees} />
-
+        <EmployeeTable employees={employees} />
+        <br/>
         <label className="add-dep-label">Add employee to department</label>
           <select
             className="select-department"

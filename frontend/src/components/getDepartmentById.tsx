@@ -1,14 +1,17 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getDepartmentById, deleteDepartmentById } from "../apiClient";
+import { getDepartmentById, deleteDepartmentById, getEmployeesByDepartmentId } from "../apiClient";
 import Container from "react-bootstrap/esm/Container";
 import "../css/getDepartmentById.css";
 import { Button } from "react-bootstrap";
 import { confirm } from "react-confirm-box";
+import { Employee } from "../models/employeeModel";
+import { Department } from "../models/departmentModels";
+import { EmployeeDepartmentTable } from "./employeeDepartmentTable";
 
 export const GetDepartmentById = () => {
   const params = useParams();
-  const department_id: string | undefined = params.id;
+  const department_id = params.id;
   const [department, setDepartment] = useState<any>({});
   const [error, setError] = useState("");
   const options = {
@@ -17,12 +20,14 @@ export const GetDepartmentById = () => {
       cancellable: "No"
     }
   };
+  const [employees, setEmployees] = useState<Employee>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getDepartmentById(Number(department_id)).then((response) =>
-      setDepartment(response[0])
-    );
+    getDepartmentById(Number(department_id)).then((response: Department) =>
+      setDepartment(response[0]));
+    getEmployeesByDepartmentId(Number(department_id)).then((response: Employee) =>
+      setEmployees(response));
   }, []);
 
   if (department.created_at) {
@@ -56,7 +61,7 @@ export const GetDepartmentById = () => {
   };
   return (
     <div>
-      <Container>
+      <Container  >
         <div>
           <img className="department-image" src={department.image} />
           <h4>{department.department_name}</h4>
@@ -81,6 +86,8 @@ export const GetDepartmentById = () => {
             </Button>
           </div>
         </div>
+        <br />
+        <EmployeeDepartmentTable employees={employees} />
         <br />
         <Link to="/" className="link">
           {" "}
