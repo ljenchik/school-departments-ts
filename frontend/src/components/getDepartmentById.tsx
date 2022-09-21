@@ -24,9 +24,9 @@ export const GetDepartmentById = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getDepartmentById(Number(department_id)).then((response: Department) =>
-      setDepartment(response[0]));
-    getEmployeesByDepartmentId(Number(department_id)).then((response: Employee) =>
+    getDepartmentById(Number(department_id)).then((response) =>
+      setDepartment(response.department));
+    getEmployeesByDepartmentId(Number(department_id)).then((response) =>
       setEmployees(response));
   }, []);
 
@@ -64,9 +64,14 @@ export const GetDepartmentById = () => {
       <Container  >
         <div>
           <img className="department-image" src={department.image} />
+          
           <h4>{department.department_name}</h4>
+          <br/>
+          {department.count === 1 ? <p>There is {department.count} employee in this department</p> : 
+           <p>There are {department.count} employees in this department</p>}
+           <p>Department average salary is £{department.avg}</p>
+         
         </div>
-        <br />
         <p className="created_at">Department was created on {department.created_at}</p>
         {department.updated_at ? (
           <p className="created_at">Updated on {department.updated_at}</p>
@@ -89,10 +94,11 @@ export const GetDepartmentById = () => {
         <br />
         <EmployeeDepartmentTable employees={employees} />
         <br />
-        <Link to="/" className="link">
+        <Link to={`/department/${department_id}/employee/create`} className="link">
           {" "}
-          View all departments{" "}
+          Add employee to {department.department_name}
         </Link>
+        <br />
       </Container>
     </div>
   );

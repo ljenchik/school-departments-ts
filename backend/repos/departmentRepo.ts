@@ -6,8 +6,18 @@ export async function getAllDepartments(): Promise<Department[]> {
   return await knex("department").orderBy("department.department_name");
 }
 
-export async function getDepartmentById(id: number): Promise<Department[]> {
-  return await knex("department").where("id", id);
+export async function getDepartmentById(id: number) {
+  return (await knex
+  .raw('select d1.*, grp.count, grp.avg\
+  from department d1 \
+  join (\
+    select d.id, count(e.id), AVG(e.salary) \
+    from department d\
+    left join employee e on e.department_id = d.id\
+    where(d.id = ' + id + 
+    ') group by d.id\
+  ) grp on d1.id = grp.id')
+  ).rows
 }
 
 export async function createDepartment(department: {

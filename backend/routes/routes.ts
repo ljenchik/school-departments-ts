@@ -31,13 +31,25 @@ const router = express.Router()
   router.get("/department/:id(\\d+)", async (req: Request, res: Response) => {
     var id = parseInt(req.params.id);
     try {
-      const department = await getDepartmentById(id);
-      return res.json(department);
-    }
-      catch (error) {
-        res.status(500);
-        return res.send(error);
+      const response = await getDepartmentById(id);
+      const department = response[0];
+      if (department) {
+        if (department.avg === null) {
+          department.avg = 0;
+        }
+        else {
+          department.avg = parseFloat((department.avg).toFixed(2));
+        }
+        department.count = parseInt(department.count);
+        return res.json({success: true, department: department});
       }
+      else {
+        return res.json({success: false, department: ""});
+      }
+    } catch (e) {
+      res.status(500);
+      return res.send(e);
+    }
   });
 
   router.delete("/department/:id(\\d+)/delete", async (req: Request, res: Response) => {

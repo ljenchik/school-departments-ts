@@ -34,10 +34,27 @@ export async function getAllDepartments() {
 }
 
 export async function getDepartmentById(id: number) {
-  const response = await fetch(`${baseurl}/department/${id}`);
-  return await response.json();
+  try {
+    const response = await fetch(`${baseurl}/department/${id}`);
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success) {
+        return { success: true, department: data.department, error: "" };
+      } else {
+        return {
+          success: false,
+          department: {},
+          error: "Error occured while getting department data",
+        };
+      }
+    } else {
+      const error = await response.text();
+      return { success: false, department: {}, error: error };
+    }
+  } catch (e) {
+    return { success: false, department: {}, error: e };
+  }
 }
-
 
 export async function createDepartment(department: CreateDepartmentForm) {
   const response = await fetch(`${baseurl}/department/create`, {
@@ -144,7 +161,7 @@ export async function createEmployee(
           success: false,
           error: data.error,
           department_id: department_id,
-          id: null
+          id: null,
         };
       } else {
         console.log(data);
@@ -152,12 +169,17 @@ export async function createEmployee(
           success: true,
           error: "",
           department_id: department_id,
-          id: data.id
+          id: data.id,
         };
       }
     } else {
       const error = await response.text();
-      return { success: false, id: null, department_id: department_id, error: error };
+      return {
+        success: false,
+        id: null,
+        department_id: department_id,
+        error: error,
+      };
     }
   } catch (e) {
     return { success: false, id: null, department_id: department_id, error: e };
