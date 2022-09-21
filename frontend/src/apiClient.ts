@@ -117,14 +117,15 @@ export async function getEmployeeById(id: number) {
   return await response.json();
 }
 
-
-
 export async function getEmployeesByDepartmentId(id: number) {
-  const response = await fetch(`${baseurl}/department/${id}/employee`); 
+  const response = await fetch(`${baseurl}/department/${id}/employee`);
   return await response.json();
 }
 
-export async function createEmployee(department_id: number, employee: CreateEmployeeForm) {
+export async function createEmployee(
+  department_id: number,
+  employee: CreateEmployeeForm
+) {
   try {
     const response = await fetch(
       `${baseurl}/department/${department_id}/employee/create`,
@@ -162,7 +163,10 @@ export async function createEmployee(department_id: number, employee: CreateEmpl
   }
 }
 
-export async function updateEmployee(id: number, updatedEmployee: UpdateEmployeeForm) {
+export async function updateEmployee(
+  id: number,
+  updatedEmployee: UpdateEmployeeForm
+) {
   try {
     const response = await fetch(`${baseurl}/employee/${id}/update`, {
       method: "PUT",
@@ -194,13 +198,20 @@ export async function updateEmployee(id: number, updatedEmployee: UpdateEmployee
 }
 
 export async function deleteEmployeeById(id: number) {
-  const response = await fetch(`${baseurl}/employee/${id}/delete`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (response.status !== 200) {
-    throw "Error deleting. Response status code: " + response.status;
+  try {
+    const response = await fetch(`${baseurl}/employee/${id}/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      return { success: true, error: "" };
+    } else {
+      const error = await response.text();
+      return { success: false, error: error };
+    }
+  } catch (e) {
+    return { success: false, error: e };
   }
 }

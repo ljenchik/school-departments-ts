@@ -11,6 +11,7 @@ import "../css/getEmployeeById.css";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { Employee } from "../models/employeeModel";
+import { confirm } from "react-confirm-box";
 
 export const GetEmployeeById = () => {
   const [employee, setEmployee] = useState<Employee | undefined>();
@@ -18,25 +19,41 @@ export const GetEmployeeById = () => {
   const employee_id = params.id;
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const options = {
+    labels: {
+      confirmable: "Yes",
+      cancellable: "No",
+    },
+  };
 
   useEffect(() => {
-    getEmployeeById(Number(employee_id)).then((response : Employee[]) => {
-        response[0].dob = response[0].dob.split('T')[0];
-        response[0].start_date = response[0].start_date.split('T')[0];
-        setEmployee(response[0]);
-    }
-    );
+    getEmployeeById(Number(employee_id)).then((response: Employee[]) => {
+      response[0].dob = response[0].dob.split("T")[0];
+      response[0].start_date = response[0].start_date.split("T")[0];
+      response[0].created_at = response[0].created_at.split("T")[0];
+      response[0].updated_at = response[0].updated_at.split("T")[0];
+      setEmployee(response[0]);
+    });
   }, []);
 
-  const deleteEmployee = () => {
-    deleteEmployeeById(Number(employee_id)).then((response) => {
-      if (employee) {
-        navigate(`/department/${employee.department_id}`);
+  const deleteEmployee = async () => {
+    if (employee) {
+      const result = await confirm(
+        `Are you sure you want to delete ${employee.name}?`,
+        options
+      );
+      if (result) {
+        deleteEmployeeById(Number(employee_id)).then((response) => {
+          if (response.success) {
+            navigate(`/department/${employee.department_id}`);
+          } else {
+            setError("The error occured during deleting employee");
+          }
+        });
+      } else {
+        navigate(`/employee/${employee.id}`);
       }
-      //   .catch((err) => {
-      //     setError(err);
-      //   });
-    });
+    }
   };
 
   const updateEmployee = () => {
@@ -45,24 +62,9 @@ export const GetEmployeeById = () => {
     );
   };
 
-  
-
   if (employee === undefined) {
     return <div>Loading report ...</div>;
   } else {
-//     if (employee.dob){
-//         employee.dob = employee.dob.split('T')[0]
-//     }
-//     if (employee.start_date){
-//         employee.start_date = employee.start_date.split('T')[0]
-//     }
-//     if (employee.created_at){
-//         employee.created_at = employee.created_at.split('T')[0]
-//     }
-//     if (employee.updated_at){
-//         employee.updated_at = employee.updated_at.split('T')[0]
-//     }
-// }
     return (
       <Container>
         <div className="flex-container">
@@ -95,7 +97,9 @@ export const GetEmployeeById = () => {
           <div className="flex-right">
             <Row>
               <Col>Name</Col>
-              <Col xs={9} className="name">{employee.name}</Col>
+              <Col xs={9} className="name">
+                {employee.name}
+              </Col>
             </Row>
 
             <Row>
@@ -148,8 +152,14 @@ export const GetEmployeeById = () => {
         </div>
 
         <br />
-        <p className="created_at">Profile was created on {employee.created_at}</p>
-        {employee.updated_at !== null ?  <p className="created_at">Updated on {employee.updated_at}</p> : "" }
+        <p className="created_at">
+          Profile was created on {employee.created_at}
+        </p>
+        {employee.updated_at !== null ? (
+          <p className="created_at">Updated on {employee.updated_at}</p>
+        ) : (
+          ""
+        )}
         <br />
         <div className="d-flex flex-row">
           <Button className="btn btn-success my-2" onClick={updateEmployee}>
@@ -180,5 +190,5 @@ export const GetEmployeeById = () => {
         </div>
       </Container>
     );
-                  }
+  }
 };

@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getEmployeeById } from "../apiClient";
-//import "./css/updateEmployee.css";
+import "../css/updateEmployee.css";
 import { Container } from "react-bootstrap";
 import { UpdateEmployeeForm } from "../models/employeeModel";
 
@@ -34,6 +34,7 @@ export const UpdateEmployee = () => {
     getEmployeeById(Number(employee_id)).then((response) => {
     response[0].dob = response[0].dob.split('T')[0];
     response[0].start_date = response[0].start_date.split('T')[0];
+    
       setEmployee(response[0]);
     });
   }, []);
