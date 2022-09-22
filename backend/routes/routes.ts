@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { createDepartment, getAllDepartments,  deleteDepartmentById, updateDepartment, getDepartmentById } from "../repos/departmentRepo";
-import { createEmployee, deleteEmployeeById, getAllEmployees, getEmployeeById, getEmployeesByDepartmentId, updateEmployee} from "../repos/employeeRepo";
+import { createEmployee, deleteEmployeeById, getAllEmployees, getAllEmployeesByDob, getEmployeeById, getEmployeesByDepartmentId, updateEmployee} from "../repos/employeeRepo";
 import { requestValidation } from "../requestValidation";
  
 const router = express.Router()
@@ -172,6 +172,22 @@ router.delete("/employee/:id(\\d+)/delete", async (req, res) => {
   var id = parseInt(req.params.id);
   await deleteEmployeeById(id);
   res.sendStatus(200);
+});
+
+
+router.get("/employee/search", async (req, res) => {
+  const { from, to } = req.query;
+  var employees = await getAllEmployeesByDob(from, to);
+  // if (employees) {
+  //   for (var i = 0; i < employees.length; i++) {
+  //     employees[i].dob = employees[i].dob.toISOString().split("T")[0];
+  //     employees[i].start_date = employees[i].start_date.toISOString().split("T")[0];
+  //   }
+    return res.json(employees);
+  //}
+  // else {
+  //   console.log("No employees");
+  // }
 });
 
 

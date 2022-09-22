@@ -238,3 +238,9 @@ export async function deleteEmployeeById(id: number) {
     return { success: false, error: e };
   }
 }
+
+export async function getAllEmployeesByDob(from: any, to: any) {
+  const response = await fetch(`${baseurl}/employee/search?from=${from}&to=${to}`);
+  return await response.json();
+}
+

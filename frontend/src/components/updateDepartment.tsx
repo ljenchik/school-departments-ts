@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import React, { useEffect, useState, useRef} from "react";
+import React, { useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import { getDepartmentById, updateDepartment } from "../apiClient";
 import Container from "react-bootstrap/esm/Container";
@@ -16,7 +16,7 @@ const urlValidation = async (url: string) => {
 export const UpdateDepartment = () => {
 
   const params = useParams();
-  const department_id: string | undefined = params.id;
+  const department_id = params.id;
   const [department, setDepartment] = useState<UpdateDepartmentForm>({
     department_name: "",
     image: "",
@@ -32,7 +32,7 @@ export const UpdateDepartment = () => {
 
   useEffect(() => {
     getDepartmentById(Number(department_id)).then((response) => {
-      setDepartment(response[0]);
+      setDepartment(response.department);
     });
   }, []);
 
@@ -88,7 +88,7 @@ export const UpdateDepartment = () => {
       request.image = displayImage;
       
 
-      updateDepartment(Number(department_id), request).then((response) => {
+      updateDepartment(Number(department_id), request).then((_response) => {
         navigate(`/department/${department_id}`);
       })
 

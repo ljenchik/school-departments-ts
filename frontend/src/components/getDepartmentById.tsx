@@ -55,8 +55,9 @@ export const GetDepartmentById = () => {
   };
 
   const updateDepartment = () => {
-    getDepartmentById(Number(department_id)).then((response) =>
+    getDepartmentById(Number(department_id)).then((_response) => {
       navigate(`/department/${department_id}/update`)
+    }
     );
   };
   return (
@@ -93,6 +94,7 @@ export const GetDepartmentById = () => {
         </div>
         <br />
         <EmployeeDepartmentTable employees={employees} />
+        
         <br />
         <Link to={`/department/${department_id}/employee/create`} className="link">
           {" "}

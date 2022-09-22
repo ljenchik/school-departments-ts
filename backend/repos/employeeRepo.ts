@@ -84,3 +84,16 @@ export async function updateEmployee(
 export async function deleteEmployeeById(id: number): Promise<void> {
   await knex("employee").where("id", id).del();
 }
+
+export async function getAllEmployeesByDob(start_date: any, end_date: any): Promise<GetEmployee[]> {
+  return (
+    await knex.raw(
+      "select e.*, d.department_name from employee e join department d on d.id=e.department_id\
+        WHERE dob >= '" +
+        start_date +
+        "'::date AND dob <= '" +
+        end_date +
+        "'::date"
+    )
+  ).rows;
+}
