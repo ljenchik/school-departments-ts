@@ -3,8 +3,10 @@ import { ReactNode } from "react";
 export interface Employee {
     id : number | null,
     name: string;
+    gender: string;
     role: string;
     dob: string;
+    age: number | null;
     address: string;
     phone: string;
     email: string;

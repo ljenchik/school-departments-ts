@@ -3,6 +3,20 @@ import { createDepartment, getAllDepartments,  deleteDepartmentById, updateDepar
 import { createEmployee, deleteEmployeeById, getAllEmployees, getAllEmployeesByDob, getEmployeeById, getEmployeesByDepartmentId, updateEmployee} from "../repos/employeeRepo";
 import { requestValidation } from "../requestValidation";
  
+const getAge = (dateString: string) => 
+{
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+    return age;
+}
+
+
 const router = express.Router()
 
   router.post("/department/create", async (req: Request, res: Response) => {
@@ -77,10 +91,12 @@ router.put("/department/:id(\\d+)/update", async (req: Request, res: Response) =
     }
 });
 
-
 router.get("/employee", async (_req : Request, res: Response) => {
   try{
     const employees = await getAllEmployees();
+    for (var i = 0; i < employees.length; i++) {
+      employees[i].age = getAge(employees[i].dob.toLocaleString());
+    }
     return res.json({employees: employees, success: true, error: ""});
   }  
   catch (error) {
@@ -93,6 +109,7 @@ router.get("/employee", async (_req : Request, res: Response) => {
    const id = parseInt(req.params.id);
    try {
     const employee = await getEmployeeById(id);
+    employee[0].age = getAge(employee[0].dob.toLocaleString());
     return res.json(employee);
    }
     catch (error) {
@@ -105,6 +122,7 @@ router.get("/department/:id(\\d+)/employee",  async (req: Request, res: Response
   var id = parseInt(req.params.id);
   const employees = await getEmployeesByDepartmentId(id);
   for (var i = 0; i < employees.length; i++) {
+    employees[i].age = getAge(employees[i].dob.toLocaleString());
   }
   return res.json(employees);
 });
@@ -178,16 +196,10 @@ router.delete("/employee/:id(\\d+)/delete", async (req, res) => {
 router.get("/employee/search", async (req, res) => {
   const { from, to } = req.query;
   var employees = await getAllEmployeesByDob(from, to);
-  // if (employees) {
-  //   for (var i = 0; i < employees.length; i++) {
-  //     employees[i].dob = employees[i].dob.toISOString().split("T")[0];
-  //     employees[i].start_date = employees[i].start_date.toISOString().split("T")[0];
-  //   }
+  for (var i = 0; i < employees.length; i++) {
+    employees[i].age = getAge(employees[i].dob.toLocaleString());
+  }
     return res.json(employees);
-  //}
-  // else {
-  //   console.log("No employees");
-  // }
 });
 
 

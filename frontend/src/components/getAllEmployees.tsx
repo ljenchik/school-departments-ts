@@ -18,6 +18,7 @@ export const GetAllEmployees = () => {
   const [endDate, setEndDate] = useState<any>();
   const [isDisabled, setDisabled] = useState(true);
   const [employeesByDob, setEmployeesByDob] = useState([]);
+  const [url, setUrl] = useState<string>();
   const navigate = useNavigate();
 
   const handleChangeDepartment = (event: { target: { value: React.SetStateAction<string | undefined>; }; }) => {
@@ -60,22 +61,27 @@ export const GetAllEmployees = () => {
     if (startDate === 'dd/mm/yyyy' && endDate === 'dd/mm/yyyy') {
       setDisabled(true);
     }
-    else if (startDate !== 'dd/mm/yyyy' && endDate === 'dd/mm/yyyy'){
-      getAllEmployeesByDob(startDate, new Date().toJSON().slice(0,10)).then((response) => {
+    else if (startDate !== 'dd/mm/yyyy' && (endDate === 'dd/mm/yyyy' || endDate === undefined)){
+      const to = new Date().toJSON().slice(0,10);
+      getAllEmployeesByDob(startDate, to).then((response) => {
         setEmployeesByDob(response);
         setSearchTableDisplay(true);
+        setUrl(`/employee?from={startDate}&to={to}`);
       });
     }
-    else if (startDate === 'dd/mm/yyyy' && endDate !== 'dd/mm/yyyy'){
-      getAllEmployeesByDob('1900-01-01', endDate).then((response) => {
+    else if ((startDate === 'dd/mm/yyyy' || startDate === undefined) && endDate !== 'dd/mm/yyyy'){
+      const from = '1900-01-01';
+      getAllEmployeesByDob(from, endDate).then((response) => {
         setEmployeesByDob(response);
         setSearchTableDisplay(true);
+        setUrl(`/employee?from={from}&to={endDate}`);
       });
     }
     else {
       getAllEmployeesByDob(startDate, endDate).then((response) => {
         setEmployeesByDob(response);
         setSearchTableDisplay(true);
+        setUrl(`/employee?from={startDate}&to={endDate}`);
       });
     }
   };
@@ -90,13 +96,6 @@ export const GetAllEmployees = () => {
       setDisabled(true);
     });
   };
-
-  const handleKeyPress = (event) => {
-    if (event.keyCode === 13) {
-      submit();
-    }
-  };
-
 
   return (
     <Container>

@@ -11,6 +11,7 @@ import moment from "moment";
     start_date: Date;
     salary: number;
     photo: string;
+    gender: string;
     created_at: moment.Moment;
   }
 
@@ -26,6 +27,8 @@ import moment from "moment";
     start_date: Date | string;
     salary: number;
     photo: string;
+    gender: string;
+    age: number;
     created_at: string;
     updated_at: string | null;
     department_id: number;

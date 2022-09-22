@@ -104,6 +104,13 @@ export const GetEmployeeById = () => {
             </Row>
 
             <Row>
+              <Col>Gender</Col>
+              <Col xs={9}>
+                {employee.gender}
+              </Col>
+            </Row>
+
+            <Row>
               <Col>Department</Col>
               <Col xs={9}>
                 <Link
@@ -123,6 +130,11 @@ export const GetEmployeeById = () => {
             <Row>
               <Col>Date of birth</Col>
               <Col xs={9}>{employee.dob}</Col>
+            </Row>
+
+            <Row>
+              <Col>Age</Col>
+              <Col xs={9}>{employee.age} years old</Col>
             </Row>
 
             <Row>

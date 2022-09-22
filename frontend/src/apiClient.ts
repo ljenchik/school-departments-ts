@@ -239,7 +239,7 @@ export async function deleteEmployeeById(id: number) {
   }
 }
 
-export async function getAllEmployeesByDob(from: any, to: any) {
+export async function getAllEmployeesByDob(from: Date | string | undefined, to: any) {
   const response = await fetch(`${baseurl}/employee/search?from=${from}&to=${to}`);
   return await response.json();
 }

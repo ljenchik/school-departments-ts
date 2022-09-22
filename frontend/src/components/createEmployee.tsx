@@ -16,8 +16,10 @@ export const CreateEmployee = () => {
   const [employee, setEmployee] = useState<Employee>({
     id: null,
     name: "",
+    gender: "",
     role: "",
     dob: "",
+    age: null,
     address: "",
     phone: "",
     email: "",
@@ -42,6 +44,11 @@ export const CreateEmployee = () => {
 
   const handleChangeEmployeeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     employee.name = event.target.value;
+    setEmployee({ ...employee });
+  };
+
+  const handleChangeEmployeeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
+    employee.gender = event.target.value;
     setEmployee({ ...employee });
   };
 
@@ -93,7 +100,9 @@ export const CreateEmployee = () => {
   const reset = () => {
     setEmployee({ id: null, name: "",
     role: "",
+    gender: "",
     dob: "",
+    age: null,
     address: "",
     phone: "",
     email: "",
@@ -114,7 +123,9 @@ export const CreateEmployee = () => {
       id: null,  
       name: "",
         role: "",
+        gender: "",
         dob: "",
+        age: null,
         address: "",
         phone: "",
         email: "",
@@ -158,6 +169,21 @@ export const CreateEmployee = () => {
               value={employee.name}
             ></input>
         </div>
+
+        <div>
+          <label>
+            Gender 
+            </label> 
+            <br/>
+            <input
+              className="input-large-large search-query my-2 mb-3"
+              type="text"
+              style={{ width: '75%' }}
+              onChange={(event) => handleChangeEmployeeGender(event)}
+              value={employee.gender}
+            ></input>
+        </div>
+
         <div>
           <label>
             Role

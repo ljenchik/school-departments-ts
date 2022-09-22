@@ -44,6 +44,7 @@ export async function createEmployee(department_id: number, employee: CreateEmpl
       email: employee.email,
       start_date: employee.start_date,
       salary: employee.salary,
+      gender: employee.gender,
       photo: employee.photo,
       department_id: department_id,
     })

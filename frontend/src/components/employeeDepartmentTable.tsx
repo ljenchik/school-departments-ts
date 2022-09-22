@@ -19,6 +19,8 @@ export const EmployeeDepartmentTable = ({ employees }) => {
       <ReactBootStrap.Table striped bordered hover>
         <thead>
           <th>Name</th>
+          <th>Gender</th>
+          <th>Age</th>
           <th>Role</th>
         </thead>
         <tbody>
@@ -28,6 +30,12 @@ export const EmployeeDepartmentTable = ({ employees }) => {
                 <Link to={`/employee/${employee.id}`} className="link">
                   {employee.name}
                 </Link>
+              </td>
+              <td>
+                  {employee.gender}
+              </td>
+              <td>
+                  {employee.age}
               </td>
               <td>{employee.role}</td>
             </tr>
