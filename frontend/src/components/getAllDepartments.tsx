@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
 import { getAllDepartments } from "../apiClient";
 import { Link } from "react-router-dom";
 import "../css/getAllDepartments.css";
@@ -19,11 +19,7 @@ export const GetAllDepartments = () => {
     <Container>
       <h4 className="title">Departments</h4>
       {departments.map(
-        (department: {
-          id: number;
-          department_name: string;
-          image: string;
-        }) => (
+        (department: { id: Key | null | undefined; department_name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }) => (
           <div key={department.id}>
             <Link to={`/department/${department.id}`} className="link">
               {" "}
@@ -40,11 +36,13 @@ export const GetAllDepartments = () => {
       <br />
       <br />
       <br />
-      <Carousel cols={3} rows={1} gap={10} loop>
-        {departments.map((department: any) => (
+      <Carousel cols={3} rows={1} gap={20} loop>
+        {departments.map((department: { id: any; image: string | undefined; department_name: any; }) => (
           <Carousel.Item>
             <Link to={`/department/${department.id}`} className="link">
+            <div>{department.department_name}</div>
               <img width="100%" src={department.image} />
+               
             </Link>
           </Carousel.Item>
         ))}

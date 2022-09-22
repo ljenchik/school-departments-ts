@@ -1,16 +1,16 @@
 import { knex } from "./database";
-import { GetEmployee, CreateEmployee} from "../models/employeeModel";
+import { Employee } from "../models/employeeModel";
 
-export async function getAllEmployees(): Promise<GetEmployee[]> {
-    return (
-      await knex.raw(
-        "select e.*, d.department_name from employee e\
+export async function getAllEmployees(): Promise<Employee[]> {
+  return (
+    await knex.raw(
+      "select e.*, d.department_name from employee e\
       join department d on e.department_id=d.id order By e.name"
-      )
-    ).rows;
-  }
+    )
+  ).rows;
+}
 
-export async function getEmployeeById(id: number): Promise<GetEmployee[]> {
+export async function getEmployeeById(id: number): Promise<Employee[]> {
   return (
     await knex.raw(
       "select e.*, d.department_name from employee e\
@@ -21,7 +21,9 @@ export async function getEmployeeById(id: number): Promise<GetEmployee[]> {
   ).rows;
 }
 
-export async function getEmployeesByDepartmentId(id: number):Promise<GetEmployee[]> {
+export async function getEmployeesByDepartmentId(
+  id: number
+): Promise<Employee[]> {
   return (
     await knex.raw(
       "select e.*, d.department_name from employee e\
@@ -31,9 +33,12 @@ export async function getEmployeesByDepartmentId(id: number):Promise<GetEmployee
         "order By e.name"
     )
   ).rows;
- }
+}
 
-export async function createEmployee(department_id: number, employee: CreateEmployee): Promise<void> {
+export async function createEmployee(
+  department_id: number,
+  employee: Employee
+): Promise<void> {
   const id = await knex("employee")
     .insert({
       name: employee.name,
@@ -79,7 +84,7 @@ export async function updateEmployee(
       salary,
       start_date,
       photo,
-      updated_at
+      updated_at,
     })
     .where({ id });
 }
@@ -88,7 +93,10 @@ export async function deleteEmployeeById(id: number): Promise<void> {
   await knex("employee").where("id", id).del();
 }
 
-export async function getAllEmployeesByDob(start_date: any, end_date: any): Promise<GetEmployee[]> {
+export async function getAllEmployeesByDob(
+  start_date: any,
+  end_date: any
+): Promise<Employee[]> {
   return (
     await knex.raw(
       "select e.*, d.department_name from employee e join department d on d.id=e.department_id\
