@@ -165,6 +165,7 @@ router.put("/employee/:id(\\d+)/update", async (req: Request, res: Response) => 
       await updateEmployee(
         id,
         requestBody.name,
+        requestBody.gender,
         requestBody.role,
         requestBody.dob,
         requestBody.address,

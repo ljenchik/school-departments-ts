@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, SetStateAction } from "react";
 
 export interface Employee {
     id : number | null,
@@ -22,6 +22,7 @@ export interface Employee {
   
 export interface UpdateEmployeeForm {
   name: string;
+  gender: SetStateAction<string> | string;
   role: string;
   dob: Date | string;
   address: string;

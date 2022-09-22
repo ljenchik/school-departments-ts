@@ -12,7 +12,7 @@ import { Employee } from "../models/employeeModel";
 export const CreateEmployee = () => {
   const params = useParams();
   const department_id = Number(params.id);
-  const [departmentName, setDepartmentName]= useState("");
+  const [departmentName, setDepartmentName] = useState("");
   const [employee, setEmployee] = useState<Employee>({
     id: null,
     name: "",
@@ -29,7 +29,7 @@ export const CreateEmployee = () => {
     department_id: department_id,
     department_name: "",
     updated_at: "",
-    created_at: ""
+    created_at: "",
   });
 
   const [error, setError] = useState("");
@@ -42,77 +42,98 @@ export const CreateEmployee = () => {
     });
   }, []);
 
-  const handleChangeEmployeeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeeName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.name = event.target.value;
     setEmployee({ ...employee });
   };
 
-  const handleChangeEmployeeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeeGender = (event: { target: { value: string; }; }) => {
     employee.gender = event.target.value;
+    console.log( employee.gender);
     setEmployee({ ...employee });
   };
 
-  const handleChangeEmployeeRole = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeeRole = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.role = event.target.value;
     setEmployee({ ...employee });
   };
 
-  const handleChangeEmployeeDob = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeeDob = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.dob = event.target.value;
     setEmployee({ ...employee });
   };
 
-  const handleChangeEmployeeAddress = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeeAddress = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.address = event.target.value;
     setEmployee({ ...employee });
   };
 
-  const handleChangeEmployeePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeePhone = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.phone = event.target.value;
     setEmployee({ ...employee });
   };
-  const handleChangeEmployeeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeeEmail = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.email = event.target.value;
     setEmployee({ ...employee });
   };
 
-  const handleChangeEmployeeStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeeStartDate = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.start_date = event.target.value;
     setEmployee({ ...employee });
   };
 
-  const handleChangeEmployeeSalary = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeeSalary = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.salary = event.target.value;
     setEmployee({ ...employee });
   };
 
-  const handleChangeEmployeePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmployeePhoto = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     employee.photo = event.target.value;
     setEmployee({ ...employee });
   };
 
-  const handleKeyPress = (event: { keyCode: number; }) => {
+  const handleKeyPress = (event: { keyCode: number }) => {
     if (event.keyCode === 13) {
       submit();
     }
   };
 
   const reset = () => {
-    setEmployee({ id: null, name: "",
-    role: "",
-    gender: "",
-    dob: "",
-    age: null,
-    address: "",
-    phone: "",
-    email: "",
-    start_date: "",
-    salary: "",
-    photo: "",
-    department_id: department_id,
-    department_name: "",
-    updated_at: "",
-    created_at: ""
+    setEmployee({
+      id: null,
+      name: "",
+      role: "",
+      gender: "",
+      dob: "",
+      age: null,
+      address: "",
+      phone: "",
+      email: "",
+      start_date: "",
+      salary: "",
+      photo: "",
+      department_id: department_id,
+      department_name: "",
+      updated_at: "",
+      created_at: "",
     });
     setError("");
     setDisabled(false);
@@ -120,33 +141,31 @@ export const CreateEmployee = () => {
 
   const submit = () => {
     const request: Employee = {
-      id: null,  
+      id: null,
       name: "",
-        role: "",
-        gender: "",
-        dob: "",
-        age: null,
-        address: "",
-        phone: "",
-        email: "",
-        start_date: "",
-        salary: "",
-        photo: "",
-        department_id: department_id,
-        department_name: "",
-        updated_at: "",
-        created_at: ""
+      role: "",
+      gender: "",
+      dob: "",
+      age: null,
+      address: "",
+      phone: "",
+      email: "",
+      start_date: "",
+      salary: "",
+      photo: "",
+      department_id: department_id,
+      department_name: "",
+      updated_at: "",
+      created_at: "",
     };
     Object.entries(employee).forEach(([key, value]) => {
-        request[key] = value;
-      }
-    )
+      request[key] = value;
+    });
     createEmployee(Number(department_id), request).then((response) => {
-      if (!response.success) { 
+      if (!response.success) {
         setError(response.error.slice(1, -1));
-      }
-      else {
-        navigate(`/employee/${response.id}`)
+      } else {
+        navigate(`/employee/${response.id}`);
       }
     });
   };
@@ -156,143 +175,126 @@ export const CreateEmployee = () => {
       <h3 className="title">Add employee to {departmentName}</h3>
       <fieldset onKeyDown={handleKeyPress}>
         <div>
-          <label>
-            Name 
-            </label> 
-            <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="text"
-              style={{ width: '75%' }}
-              placeholder="Enter name"
-              onChange={(event) => handleChangeEmployeeName(event)}
-              value={employee.name}
-            ></input>
+          <label>Name</label>
+          <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="text"
+            style={{ width: "75%" }}
+            placeholder="Enter name"
+            onChange={(event) => handleChangeEmployeeName(event)}
+            value={employee.name}
+          ></input>
         </div>
 
         <div>
-          <label>
-            Gender 
-            </label> 
-            <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="text"
-              style={{ width: '75%' }}
-              onChange={(event) => handleChangeEmployeeGender(event)}
-              value={employee.gender}
-            ></input>
+          <label>Gender</label>
+          <br />
+          <select
+            className="input-large-large search-query my-2 mb-3"
+            style={{ width: "75%", height: "30px" }}
+            onChange={handleChangeEmployeeGender}
+            value={employee.gender}
+          >
+            {" "}
+            <option>Choose gender</option>
+            <option>Female</option>
+            <option>Male</option>
+          </select>
         </div>
 
         <div>
-          <label>
-            Role
-            </label> <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="text"
-              style={{ width: '75%' }}
-              placeholder="Enter role"
-              onChange={(event) => handleChangeEmployeeRole(event)}
-              value={employee.role}
-            ></input>
-        </div>
-
-
-        <div>
-          <label>
-            Date of birth
-            </label> <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="date"
-              style={{ width: '75%' }}
-              onChange={(event) => handleChangeEmployeeDob(event)}
-              value={employee.dob}
-            ></input>
+          <label>Role</label> <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="text"
+            style={{ width: "75%" }}
+            placeholder="Enter role"
+            onChange={(event) => handleChangeEmployeeRole(event)}
+            value={employee.role}
+          ></input>
         </div>
 
         <div>
-          <label>
-            Address
-            </label> <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="address"
-              style={{ width: '75%' }}
-              placeholder="Enter address"
-              onChange={(event) => handleChangeEmployeeAddress(event)}
-              value={employee.address}
-            ></input>
+          <label>Date of birth</label> <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="date"
+            style={{ width: "75%" }}
+            onChange={(event) => handleChangeEmployeeDob(event)}
+            value={employee.dob}
+          ></input>
         </div>
 
         <div>
-          <label>
-            Phone
-            </label> <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="tel"
-              style={{ width: '75%' }}
-              placeholder="+44 xxxx xxxxxx"
-              onChange={(event) => handleChangeEmployeePhone(event)}
-              value={employee.phone}
-            ></input>
+          <label>Address</label> <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="address"
+            style={{ width: "75%" }}
+            placeholder="Enter address"
+            onChange={(event) => handleChangeEmployeeAddress(event)}
+            value={employee.address}
+          ></input>
         </div>
 
         <div>
-          <label>
-            Email
-            </label> <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="email"
-              style={{ width: '75%' }}
-              placeholder="Enter email address"
-              onChange={(event) => handleChangeEmployeeEmail(event)}
-              value={employee.email}
-            ></input>
+          <label>Phone</label> <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="tel"
+            style={{ width: "75%" }}
+            placeholder="+44 xxxx xxxxxx"
+            onChange={(event) => handleChangeEmployeePhone(event)}
+            value={employee.phone}
+          ></input>
         </div>
 
         <div>
-          <label>
-            Start date
-            </label> <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="date"
-              style={{ width: '75%' }}
-              onChange={(event) => handleChangeEmployeeStartDate(event)}
-              value={employee.start_date}
-            ></input>
+          <label>Email</label> <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="email"
+            style={{ width: "75%" }}
+            placeholder="Enter email address"
+            onChange={(event) => handleChangeEmployeeEmail(event)}
+            value={employee.email}
+          ></input>
         </div>
 
         <div>
-          <label>
-            Salary £
-            </label> <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="number"
-              style={{ width: '75%' }}
-              onChange={(event) => handleChangeEmployeeSalary(event)}
-              value={employee.salary}
-            ></input>
+          <label>Start date</label> <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="date"
+            style={{ width: "75%" }}
+            onChange={(event) => handleChangeEmployeeStartDate(event)}
+            value={employee.start_date}
+          ></input>
         </div>
 
         <div>
-          <label>
-            Photo (optional)
-            </label> <br/>
-            <input
-              className="input-large-large search-query my-2 mb-3"
-              type="url"
-              placeholder="https://example.com"
-              pattern="https://.*"
-              style={{ width: '75%' }}
-              onChange={(event) => handleChangeEmployeePhoto(event)}
-              value={employee.photo}
-            ></input>
+          <label>Salary £</label> <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="number"
+            style={{ width: "75%" }}
+            onChange={(event) => handleChangeEmployeeSalary(event)}
+            value={employee.salary}
+          ></input>
+        </div>
+
+        <div>
+          <label>Photo (optional)</label> <br />
+          <input
+            className="input-large-large search-query my-2 mb-3"
+            type="url"
+            placeholder="https://example.com"
+            pattern="https://.*"
+            style={{ width: "75%" }}
+            onChange={(event) => handleChangeEmployeePhoto(event)}
+            value={employee.photo}
+          ></input>
         </div>
 
         <div className="d-flex flex-row">
@@ -307,9 +309,8 @@ export const CreateEmployee = () => {
             Reset
           </Button>
           <p className="error">
-                {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
-              </p>
-
+            {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
+          </p>
         </div>
       </fieldset>
 
@@ -330,10 +331,6 @@ export const CreateEmployee = () => {
           {" "}
           View all employees{" "}
         </Link>
-
-
-
-        
       </div>
     </Container>
   );

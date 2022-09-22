@@ -38,7 +38,7 @@ export const GetAllEmployees = () => {
     }
   };
 
-  const handleChangeEndDate = (event) => {
+  const handleChangeEndDate = (event: { target: { value: string | number | Date; }; }) => {
     const end = new Date(event.target.value).toISOString().slice(0, 10);
     setEndDate(end);
     if (endDate !== 'dd/mm/yyyy') {

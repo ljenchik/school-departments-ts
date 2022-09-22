@@ -19,6 +19,7 @@ import moment from "moment";
   export interface GetEmployee {
     id: number;
     name: string;
+    gender: string;
     role: string;
     dob: Date | string;
     address: string;
@@ -27,7 +28,6 @@ import moment from "moment";
     start_date: Date | string;
     salary: number;
     photo: string;
-    gender: string;
     age: number;
     created_at: string;
     updated_at: string | null;

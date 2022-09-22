@@ -14,6 +14,7 @@ export const UpdateEmployee = () => {
   const employee_id = params.id;
   const [employee, setEmployee] = useState({
     name: "",
+    gender: "",
     role: "",
     dob: "",
     address: "",
@@ -41,6 +42,12 @@ export const UpdateEmployee = () => {
 
   const handleChangeEmployeeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     employee.name = event.target.value;
+    setEmployee({ ...employee });
+    setDisabled(false);
+  };
+
+  const handleChangeEmployeeGender = (event: { target: { value: string } }) => {
+    employee.gender = event.target.value;
     setEmployee({ ...employee });
     setDisabled(false);
   };
@@ -100,6 +107,7 @@ export const UpdateEmployee = () => {
   const saveUpdatedEmployee = () => {
     const request: UpdateEmployeeForm = {
         name: "",
+        gender: "",
         role: "",
         dob: "",
         address: "",
@@ -110,12 +118,19 @@ export const UpdateEmployee = () => {
         photo: "",
         updated_at: ""
     };
+
     if (employee.name !== "") {
       request.name = employee.name;
     }
+
+    if (employee.gender !== "Choose gender") {
+      request.gender = employee.gender;
+    }
+
     if (employee.role !== "") {
       request.role = employee.role;
     }
+
     if (employee.dob !== "") {
       request.dob = new Date(employee.dob);
     }
@@ -141,7 +156,7 @@ export const UpdateEmployee = () => {
     request.updated_at = new Date().toISOString();   
     updateEmployee(Number(employee_id), request).then((response) => {
       if (!response.success) { 
-        setError(response.error);
+        setError(response.error.slice(1, -1));
       } else {
         navigate(`/employee/${employee_id}`);
       }
@@ -161,6 +176,21 @@ export const UpdateEmployee = () => {
             onChange={(event) => handleChangeEmployeeName(event)}
             value={employee.name}
           ></input>
+        </div>
+
+        <div>
+          <label>Gender</label>
+          <br />
+          <select
+            className="input-large-large search-query my-2 mb-3"
+            style={{ width: "75%", height: "30px" }}
+            onChange={handleChangeEmployeeGender}
+            value={employee.gender}
+          >
+            <option>Choose gender</option>
+            <option>Female</option>
+            <option>Male</option>
+          </select>
         </div>
 
         <div>

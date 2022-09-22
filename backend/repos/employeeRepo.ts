@@ -56,6 +56,7 @@ export async function createEmployee(department_id: number, employee: CreateEmpl
 export async function updateEmployee(
   id: number,
   name: string,
+  gender: string,
   role: string,
   dob: Date,
   address: string,
@@ -69,6 +70,7 @@ export async function updateEmployee(
   return await knex("employee")
     .update({
       name,
+      gender,
       role,
       dob,
       address,
