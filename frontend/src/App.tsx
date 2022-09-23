@@ -17,7 +17,6 @@ const Paths = () => {
       <Route path="/" element={<GetAllDepartments />}></Route>
       <Route path="/department/:id" element={<GetDepartmentById />}></Route>
       <Route path="/employee" element={<GetAllEmployees />}></Route>
-      {/* <Route path="/employee?from=:from&to=:to" element={<GetAllEmployees />}></Route> */}
       <Route path="/department/create" element={<CreateDepartment />}></Route>
       <Route path="/department/:id/update" element={<UpdateDepartment />}></Route>
       <Route path="/employee/:id" element={<GetEmployeeById />}></Route>

@@ -51,7 +51,6 @@ export const CreateEmployee = () => {
 
   const handleChangeEmployeeGender = (event: { target: { value: string; }; }) => {
     employee.gender = event.target.value;
-    console.log( employee.gender);
     setEmployee({ ...employee });
   };
 
@@ -161,6 +160,7 @@ export const CreateEmployee = () => {
     Object.entries(employee).forEach(([key, value]) => {
       request[key] = value;
     });
+
     createEmployee(Number(department_id), request).then((response) => {
       if (!response.success) {
         setError(response.error.slice(1, -1));

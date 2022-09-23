@@ -64,7 +64,7 @@ export const GetAllEmployees = () => {
     else if (startDate !== 'dd/mm/yyyy' && (endDate === 'dd/mm/yyyy' || endDate === undefined)){
       const to = new Date().toJSON().slice(0,10);
       getAllEmployeesByDob(startDate, to).then((response) => {
-        setEmployeesByDob(response);
+        setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
         setUrl(`/employee?from={startDate}&to={to}`);
       });
@@ -72,14 +72,14 @@ export const GetAllEmployees = () => {
     else if ((startDate === 'dd/mm/yyyy' || startDate === undefined) && endDate !== 'dd/mm/yyyy'){
       const from = '1900-01-01';
       getAllEmployeesByDob(from, endDate).then((response) => {
-        setEmployeesByDob(response);
+        setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
         setUrl(`/employee?from={from}&to={endDate}`);
       });
     }
     else {
       getAllEmployeesByDob(startDate, endDate).then((response) => {
-        setEmployeesByDob(response);
+        setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
         setUrl(`/employee?from={startDate}&to={endDate}`);
       });

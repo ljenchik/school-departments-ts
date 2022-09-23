@@ -14,7 +14,7 @@ import { Employee } from "../models/employeeModel";
 import { confirm } from "react-confirm-box";
 
 export const GetEmployeeById = () => {
-  const [employee, setEmployee] = useState<Employee | undefined>();
+  const [employee, setEmployee] = useState<Employee>();
   const params = useParams();
   const employee_id = params.id;
   const navigate = useNavigate();
@@ -27,13 +27,13 @@ export const GetEmployeeById = () => {
   };
 
   useEffect(() => {
-    getEmployeeById(Number(employee_id)).then((response: Employee[]) => {
-      response[0].dob = response[0].dob.split("T")[0];
-      response[0].start_date = response[0].start_date.split("T")[0];
-      response[0].created_at = response[0].created_at.split("T")[0];
-      if (response[0].updated_at)
-       {response[0].updated_at = response[0].updated_at.split("T")[0];}
-      setEmployee(response[0]);
+    getEmployeeById(Number(employee_id)).then((response) => {
+      response.employee.dob = response.employee.dob.split("T")[0];
+      response.employee.start_date = response.employee.start_date.split("T")[0];
+      response.employee.created_at = response.employee.created_at.split("T")[0];
+      if (response.employee.updated_at)
+       {response.employee.updated_at = response.employee.updated_at.split("T")[0];}
+      setEmployee(response.employee);
     });
   }, []);
 
@@ -54,6 +54,9 @@ export const GetEmployeeById = () => {
       } else {
         navigate(`/employee/${employee.id}`);
       }
+    }
+    else {
+      setError("The error occured during deleting employee");
     }
   };
 

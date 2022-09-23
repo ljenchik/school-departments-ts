@@ -56,17 +56,13 @@ router.get("/department/:id(\\d+)", async (req: Request, res: Response) => {
   try {
     const response = await getDepartmentById(id);
     const department = response[0];
-    if (department) {
       if (department.avg === null) {
         department.avg = 0;
       } else {
         department.avg = parseFloat(department.avg.toFixed(2));
       }
       department.count = parseInt(department.count);
-      return res.json({ success: true, department: department });
-    } else {
-      return res.json({ success: false, department: "" });
-    }
+      return res.json({ success: true, department: department, error: "" });
   } catch (e) {
     res.status(500);
     return res.send(e);
@@ -78,14 +74,27 @@ router.delete(
   async (req: Request, res: Response) => {
     var id = parseInt(req.params.id);
     try {
-      await deleteDepartmentById(id);
-      return res.json({ success: true, error: "" });
-    } catch (error) {
+      const response = await getDepartmentById(id);
+      if (response[0].count === '0') {
+        try {
+          await deleteDepartmentById(id);
+          return res.json({ success: true, error: "" });
+        } catch (e) {
+          res.status(500);
+          return res.send(e);
+        }
+      } else {
+        res.status(500);
+        return res.json({
+          success: false,
+          error: "You can't delete department with employees",
+        });
+      }
+    } catch (e) {
       res.status(500);
-      return res.send(error);
+      return res.send(e);
     }
-  }
-);
+  });
 
 router.put(
   "/department/:id(\\d+)/update",
@@ -125,7 +134,7 @@ router.get("/employee/:id(\\d+)", async (req: Request, res: Response) => {
   try {
     const employee = await getEmployeeById(id);
     employee[0].age = getAge(employee[0].dob.toLocaleString());
-    return res.json(employee);
+    return res.json({success: true, employee: employee, error: ""});
   } catch (error) {
     res.status(500);
     return res.send(error);
@@ -141,7 +150,7 @@ router.get(
       for (var i = 0; i < employees.length; i++) {
         employees[i].age = getAge(employees[i].dob.toLocaleString());
       }
-      return res.json(employees);
+      return res.json({success: true, employees: employees, error: ""});
     } catch (error) {
       res.status(500);
       return res.send(error);
@@ -157,7 +166,9 @@ router.post(
     var validationResult = requestValidation(requestBody);
     if (!validationResult.success) {
       res.status(500);
-      return res.json(validationResult.error);
+      return res.json({success: false,
+        id: "",
+        department_id: department_id, error: validationResult.error});
     } else {
       try {
         const phone = requestBody.phone.replace(/\s/g, "");
@@ -242,7 +253,7 @@ router.get("/employee/search", async (req, res) => {
     for (var i = 0; i < employees.length; i++) {
       employees[i].age = getAge(employees[i].dob.toLocaleString());
     }
-    return res.json(employees);
+    return res.json({success: true, employees: employees, error: ""});
   } catch (error) {
     res.status(500);
     return res.send(error);

@@ -33,10 +33,9 @@ export const UpdateEmployee = () => {
 
   useEffect(() => {
     getEmployeeById(Number(employee_id)).then((response) => {
-    response[0].dob = response[0].dob.split('T')[0];
-    response[0].start_date = response[0].start_date.split('T')[0];
-    
-      setEmployee(response[0]);
+    response.employee.dob = response.employee.dob.split('T')[0];
+    response.employee.start_date = response.employee.start_date.split('T')[0];
+      setEmployee(response.employee);
     });
   }, []);
 

@@ -1,25 +1,30 @@
-import React, { useState } from "react";
-import { createDepartment } from "../apiClient";
+import React, { useEffect, useState } from "react";
+import { createDepartment, getDepartmentById } from "../apiClient";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
 import { useNavigate } from "react-router-dom";
 import "../css/createDepartment.css";
 import { validateImage } from "image-validator";
-import { CreateDepartmentForm } from "../models/departmentModels";
+import { Department } from "../models/departmentModels";
 
 const urlValidation = async (url: string) => {
   const isValidImage = await validateImage(url);
   return isValidImage;
-}
+};
 
 export const CreateDepartment = () => {
-  const [department, setDepartment] = useState<CreateDepartmentForm>({
+  const [department, setDepartment] = useState<Department>({
+    id: null,
     department_name: "",
     image: "",
+    created_at: "",
+    updated_at: "",
   });
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   const handleChangeDepartmentName = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -35,33 +40,54 @@ export const CreateDepartment = () => {
   };
 
   const submit = async () => {
-    const request: CreateDepartmentForm = {
+    const request: Department = {
+      id: null,
       department_name: "",
       image: "",
+      created_at: "",
+      updated_at: "",
     };
 
-    request.department_name = department.department_name;
-
-    if (!request.department_name) {
+    if (!department.department_name) {
       setError("Enter department name");
     } else {
-      if (await urlValidation(department.image) && department.image) {
-        request.image = department.image;
-        createDepartment(request).then((response) => {
-          navigate(`/`);
-        }
-      )}
-      else if (!department.image) {
-        request.image =
-        "https://seekvectorlogo.net/wp-content/uploads/2019/03/department-for-education-vector-logo.png";
-        createDepartment(request).then((response) => {
-          navigate(`/`);
-        }
-      )}
-      else if (await urlValidation(department.image) === false) {
-        setError("Enter a valid image url");
-      }
+      request.department_name = department.department_name;
     }
+
+    if (department.image && (await urlValidation(department.image))) {
+      request.image = department.image;
+    } else {
+      request.image =
+        "https://seekvectorlogo.net/wp-content/uploads/2019/03/department-for-education-vector-logo.png";
+    }
+
+    createDepartment(request).then((response) => {
+      console.log("response", response);
+      if (!response.id) {
+        if (
+          response.error.includes(
+            "duplicate key value violates unique constraint"
+          )
+        ) {
+          setError("Department with this name already exists");
+        } else {
+          setError(response.error.slice(1, -1));
+        }
+      } else {
+        console.log("response-id", response.id);
+        navigate(`/department/${response.id}`);
+      }
+    });
+
+    // } else if (!department.image) {
+    //   request.image =
+    //     "https://seekvectorlogo.net/wp-content/uploads/2019/03/department-for-education-vector-logo.png";
+    //   createDepartment(request).then((response) => {
+    //     navigate(`/department/${department.id}`);
+    //   });
+    // } else if ((await urlValidation(department.image)) === false) {
+    //   setError("Enter a valid image url");
+    // }
   };
 
   const handleKeyPress = (event: { keyCode: number }) => {

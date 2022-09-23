@@ -1,9 +1,19 @@
 export interface Department {
-    id : number,
+    id : number | null | string,
     department_name: string;
     image: string;
     created_at: string;
     updated_at: string;
+}
+
+export interface DepartmentEmployee {
+    id : number | null,
+    department_name: string;
+    image: string;
+    created_at: string;
+    updated_at: string;
+    count: number;
+    avg: number
 }
 
 export interface CreateDepartmentForm {
