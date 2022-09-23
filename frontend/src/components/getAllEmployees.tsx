@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import "../css/getAllEmployees.css";
 import { Employee } from "../models/employeeModel";
 import { Department } from "../models/departmentModels";
+import { EmployeeTableDOB } from "./employeeTableDOB";
 
 export const GetAllEmployees = () => {
   const [employees, setEmployees] = useState<Employee[]>();
@@ -121,7 +122,7 @@ export const GetAllEmployees = () => {
           >
             Reset
           </Button>
-        { searchTableDisplay ? <EmployeeTable employees={employeesByDob} /> : <EmployeeTable employees={employees} />}
+        { searchTableDisplay ? <EmployeeTableDOB employees={employeesByDob} /> : <EmployeeTable employees={employees} />}
 
         <br/>
         <label className="add-dep-label">Add employee to department</label>

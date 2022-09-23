@@ -2,7 +2,7 @@ import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../css/employeeTable.css";
 
-export const EmployeeTable = ({ employees }) => {
+export const EmployeeTableDOB = ({ employees }) => {
   if (employees === undefined) {
     return <div style={{ color: "red" }}>Loading data ... </div>;
   }
@@ -16,6 +16,7 @@ export const EmployeeTable = ({ employees }) => {
         <thead>
           <th>Name</th>
           <th>Gender</th>
+          <th>Date of birth</th>
           <th>Age</th>
           <th>Department</th>
           <th>Role</th>
@@ -28,9 +29,13 @@ export const EmployeeTable = ({ employees }) => {
                   {employee.name}
                 </Link>
               </td>
-
+              
               <td>
                   {employee.gender}
+              </td>
+
+              <td>
+                  {employee.dob.split("T")[0]}
               </td>
 
               <td>

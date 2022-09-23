@@ -86,12 +86,17 @@ export const GetDepartmentById = () => {
             <h4>{department.department_name}</h4>
             <br />
 
-            {department.count === 1 ? (
-              <p>There is {department.count} employee in this department</p>
-            ) : (
-              <p>There are {department.count} employees in this department</p>
+            {department.count === 1 ? 
+              (<div><p>There is {department.count} employee in this department</p>
+              <p>Department average salary is £{department.avg}</p></div>)
+             : (department.count === 0 ? 
+              <p>There are no employees in this department</p>
+             : 
+             (<div><p>There are {department.count} employees in this department</p>
+             <p>Department average salary is £{department.avg}</p></div>)
             )}
-            <p>Department average salary is £{department.avg}</p>
+            
+            
           </div>
           <p className="created_at">
             Department was created on {department.created_at}
@@ -123,7 +128,7 @@ export const GetDepartmentById = () => {
 
           <br />
 
-          <EmployeeDepartmentTable employees={employees} />
+          {department.count === 0 ? "" : <EmployeeDepartmentTable employees={employees} />}
 
           <br />
           <Link
