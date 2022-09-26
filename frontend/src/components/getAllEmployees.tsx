@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllEmployees, getAllEmployeesByDob} from "../apiClient";
+import { getAllEmployees, getAllEmployeesByDob } from "../apiClient";
 import { EmployeeTable } from "./employeeTable";
 import Container from "react-bootstrap/esm/Container";
 import { getAllDepartments } from "../apiClient";
@@ -21,28 +21,66 @@ export const GetAllEmployees = () => {
   const [employeesByDob, setEmployeesByDob] = useState([]);
   const [url, setUrl] = useState<string>();
   const navigate = useNavigate();
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const from = urlParams.get("from");
+    const to = urlParams.get("to");
 
-  const handleChangeDepartment = (event: { target: { value: React.SetStateAction<string | undefined>; }; }) => {
+  const handleChangeDepartment = (event: {
+    target: { value: React.SetStateAction<string | undefined> };
+  }) => {
     setDepartmentName(event.target.value);
   };
 
   useEffect(() => {
     getAllEmployees().then((response) => setEmployees(response.employees));
-    getAllDepartments().then((response) => setDepartments(response.departments));
+    getAllDepartments().then((response) =>
+      setDepartments(response.departments)
+    );
+    
+      if (from && to) {
+        getAllEmployeesByDob(from, to).then((response) => {
+          setEmployeesByDob(response.employees);
+          setSearchTableDisplay(true);
+        });
+      }
   }, []);
 
-  const handleChangeStartDate = (event: { target: { value: string | number | Date; }; }) => {
+
+  const startDateValue = ((): string | number | readonly string[] | undefined => {
+    if (from && to) {
+      return from
+    }
+    else {
+      return startDate
+    }
+  })
+
+  const endDateValue = ((): string | number | readonly string[] | undefined => {
+    if (from && to) {
+      return to
+    }
+    else {
+      return startDate
+    }
+  })
+
+  const handleChangeStartDate = (event: {
+    target: { value: string | number | Date };
+  }) => {
     const start = new Date(event.target.value).toISOString().slice(0, 10);
     setStartDate(start);
-    if (startDate !== 'dd/mm/yyyy') {
+    if (startDate !== "dd/mm/yyyy") {
       setDisabled(false);
     }
   };
 
-  const handleChangeEndDate = (event: { target: { value: string | number | Date; }; }) => {
+  const handleChangeEndDate = (event: {
+    target: { value: string | number | Date };
+  }) => {
     const end = new Date(event.target.value).toISOString().slice(0, 10);
     setEndDate(end);
-    if (endDate !== 'dd/mm/yyyy') {
+    if (endDate !== "dd/mm/yyyy") {
       setDisabled(false);
     }
   };
@@ -59,26 +97,29 @@ export const GetAllEmployees = () => {
   };
 
   const search = () => {
-    if (startDate === 'dd/mm/yyyy' && endDate === 'dd/mm/yyyy') {
+    if (startDate === "dd/mm/yyyy" && endDate === "dd/mm/yyyy") {
       setDisabled(true);
-    }
-    else if (startDate !== 'dd/mm/yyyy' && (endDate === 'dd/mm/yyyy' || endDate === undefined)){
-      const to = new Date().toJSON().slice(0,10);
+    } else if (
+      startDate !== "dd/mm/yyyy" &&
+      (endDate === "dd/mm/yyyy" || endDate === undefined)
+    ) {
+      const to = new Date().toJSON().slice(0, 10);
       getAllEmployeesByDob(startDate, to).then((response) => {
         setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
         setUrl(`/employee?from={startDate}&to={to}`);
       });
-    }
-    else if ((startDate === 'dd/mm/yyyy' || startDate === undefined) && endDate !== 'dd/mm/yyyy'){
-      const from = '1900-01-01';
+    } else if (
+      (startDate === "dd/mm/yyyy" || startDate === undefined) &&
+      endDate !== "dd/mm/yyyy"
+    ) {
+      const from = "1900-01-01";
       getAllEmployeesByDob(from, endDate).then((response) => {
         setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
         setUrl(`/employee?from={from}&to={endDate}`);
       });
-    }
-    else {
+    } else {
       getAllEmployeesByDob(startDate, endDate).then((response) => {
         setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
@@ -87,64 +128,63 @@ export const GetAllEmployees = () => {
     }
   };
 
-
   const reset = () => {
     getAllEmployees().then((response) => {
       setEmployees(response.employees);
       setSearchTableDisplay(false);
-      setStartDate('dd/mm/yyyy');
-      setEndDate('dd/mm/yyyy');
+      setStartDate("dd/mm/yyyy");
+      setEndDate("dd/mm/yyyy");
       setDisabled(true);
     });
   };
 
   return (
     <Container>
-        <h3 className="title">Employees</h3>
-        <label className="add-dep-label">
-            Filter employees by date of birth from
-          </label>
-        <input type="date" onChange={handleChangeStartDate} value={startDate}/>
-          <label className="add-dep-label">to</label>
-          <input type="date" onChange={handleChangeEndDate} value={endDate}/>
-          <Button
-            className="btn btn-success my-3 mx-2"
-            onClick={search}
-            disabled={isDisabled}
-          >
-            Search
-          </Button>
+      <h3 className="title">Employees</h3>
+      <label className="add-dep-label">
+        Filter employees by date of birth from
+      </label>
+      <input type="date" onChange={handleChangeStartDate} value={startDateValue()} />
+      <label className="add-dep-label">to</label>
+      <input type="date" onChange={handleChangeEndDate} value={endDateValue()} />
+      <Button
+        className="btn btn-success my-3 mx-2"
+        onClick={search}
+        disabled={isDisabled}
+      >
+        Search
+      </Button>
 
-          <Button
-            className="btn btn-success my-3 mx-2"
-            onClick={reset}
-            disabled={isDisabled}
-          >
-            Reset
-          </Button>
-        { searchTableDisplay ? <EmployeeTableDOB employees={employeesByDob} /> : <EmployeeTable employees={employees} />}
+      <Button
+        className="btn btn-success my-3 mx-2"
+        onClick={reset}
+        disabled={isDisabled}
+      >
+        Reset
+      </Button>
+      {searchTableDisplay ? (
+        <EmployeeTableDOB employees={employeesByDob} />
+      ) : (
+        <EmployeeTable employees={employees} />
+      )}
 
-        <br/>
-        <label className="add-dep-label">Add employee to department</label>
-          <select
-            className="select-department"
-            value={departmentName}
-            onChange={handleChangeDepartment}
-          >
-            <option>Choose department</option>
-            {departments.map((department) => (
-              <option>{department.department_name}</option>
-            ))}
-            <option>Add department</option>
-          </select>
+      <br />
+      <label className="add-dep-label">Add employee to department</label>
+      <select
+        className="select-department"
+        value={departmentName}
+        onChange={handleChangeDepartment}
+      >
+        <option>Choose department</option>
+        {departments.map((department) => (
+          <option>{department.department_name}</option>
+        ))}
+        <option>Add department</option>
+      </select>
 
-          <Button
-            className="btn btn-success my-3 mx-2"
-            onClick={submit}
-          >
-            Submit
-          </Button>
-
+      <Button className="btn btn-success my-3 mx-2" onClick={submit}>
+        Submit
+      </Button>
     </Container>
   );
 };
