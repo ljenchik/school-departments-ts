@@ -9,22 +9,25 @@ import "../css/getAllEmployees.css";
 import { Employee } from "../models/employeeModel";
 import { Department } from "../models/departmentModels";
 import { EmployeeTableDOB } from "./employeeTableDOB";
+import { useSearchParams, useLocation } from "react-router-dom";
 
 export const GetAllEmployees = () => {
   const [employees, setEmployees] = useState<Employee[]>();
   const [departments, setDepartments] = useState<Department[]>([]);
+
   const [departmentName, setDepartmentName] = useState<string>();
   const [searchTableDisplay, setSearchTableDisplay] = useState(false);
+
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
+
   const [isDisabled, setDisabled] = useState(true);
   const [employeesByDob, setEmployeesByDob] = useState([]);
-  const [url, setUrl] = useState<string>();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = {from: searchParams.get('from'), to: searchParams.get('to')};
+
   const navigate = useNavigate();
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const from = urlParams.get("from");
-    const to = urlParams.get("to");
 
   const handleChangeDepartment = (event: {
     target: { value: React.SetStateAction<string | undefined> };
@@ -32,36 +35,36 @@ export const GetAllEmployees = () => {
     setDepartmentName(event.target.value);
   };
 
+  const location = useLocation()
+
   useEffect(() => {
     getAllEmployees().then((response) => setEmployees(response.employees));
     getAllDepartments().then((response) =>
       setDepartments(response.departments)
     );
-    
-      if (from && to) {
-        getAllEmployeesByDob(from, to).then((response) => {
+      if (query.from && query.to) {
+        getAllEmployeesByDob(query.from, query.to).then((response) => {
           setEmployeesByDob(response.employees);
           setSearchTableDisplay(true);
         });
       }
   }, []);
-
-
-  const startDateValue = ((): string | number | readonly string[] | undefined => {
-    if (from && to) {
-      return from
+  
+  const startDateValue = ((): string => {
+    if (query.from && query.to) {
+      return query.from;
     }
     else {
-      return startDate
+      return startDate;
     }
   })
 
-  const endDateValue = ((): string | number | readonly string[] | undefined => {
-    if (from && to) {
-      return to
+  const endDateValue = ((): string => {
+    if (query.from && query.to) {
+      return query.to;
     }
     else {
-      return startDate
+      return endDate;
     }
   })
 
@@ -73,6 +76,9 @@ export const GetAllEmployees = () => {
     if (startDate !== "dd/mm/yyyy") {
       setDisabled(false);
     }
+   query.from =  new Date(event.target.value).toISOString().slice(0, 10);
+   searchParams.set('from', query.from);
+   setSearchParams(searchParams);
   };
 
   const handleChangeEndDate = (event: {
@@ -83,6 +89,9 @@ export const GetAllEmployees = () => {
     if (endDate !== "dd/mm/yyyy") {
       setDisabled(false);
     }
+    query.to =  new Date(event.target.value).toISOString().slice(0, 10);
+    searchParams.set('to', query.to);
+   setSearchParams(searchParams);
   };
 
   const submit = () => {
@@ -107,7 +116,6 @@ export const GetAllEmployees = () => {
       getAllEmployeesByDob(startDate, to).then((response) => {
         setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
-        setUrl(`/employee?from={startDate}&to={to}`);
       });
     } else if (
       (startDate === "dd/mm/yyyy" || startDate === undefined) &&
@@ -117,13 +125,11 @@ export const GetAllEmployees = () => {
       getAllEmployeesByDob(from, endDate).then((response) => {
         setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
-        setUrl(`/employee?from={from}&to={endDate}`);
       });
     } else {
       getAllEmployeesByDob(startDate, endDate).then((response) => {
         setEmployeesByDob(response.employees);
         setSearchTableDisplay(true);
-        setUrl(`/employee?from={startDate}&to={endDate}`);
       });
     }
   };
@@ -165,7 +171,7 @@ export const GetAllEmployees = () => {
       {searchTableDisplay ? (
         <EmployeeTableDOB employees={employeesByDob} />
       ) : (
-        <EmployeeTable employees={employees} />
+        <EmployeeTable employees={employees} location={location} />
       )}
 
       <br />
@@ -188,3 +194,7 @@ export const GetAllEmployees = () => {
     </Container>
   );
 };
+function useHistory() {
+  throw new Error("Function not implemented.");
+}
+

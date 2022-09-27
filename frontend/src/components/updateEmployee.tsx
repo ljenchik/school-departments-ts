@@ -157,7 +157,7 @@ export const UpdateEmployee = () => {
       if (!response.success) { 
         setError(response.error.slice(1, -1));
       } else {
-        navigate(`/employee/${employee_id}`);
+        navigate(`/employee/${employee_id}`, {replace: true});
       }
     });
   };

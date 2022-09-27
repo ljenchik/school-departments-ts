@@ -2,7 +2,7 @@ import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../css/employeeTable.css";
 
-export const EmployeeTable = ({ employees }) => {
+export const EmployeeTable = ({ employees, location }) => {
   if (employees === undefined) {
     return <div style={{ color: "red" }}>Loading data ... </div>;
   }
@@ -39,7 +39,10 @@ export const EmployeeTable = ({ employees }) => {
 
               <td>
                 <Link
-                  to={`/department/${employee.department_id}`}
+                  to={{
+                    pathname:`/department/${employee.department_id}` 
+                  }}
+                  state={{from: 'asdfadf'}}
                   className="link"
                 >
                   {employee.department_name}

@@ -68,7 +68,6 @@ export async function createDepartment(department: Department): Promise<{"succes
     if (response.ok) {
       const data = await response.json();
       if (data.success) {
-        console.log("data", data);
         return { success: data.success, id: data.id, error: "" };
       } else {
         return {

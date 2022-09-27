@@ -62,7 +62,6 @@ export const CreateDepartment = () => {
     }
 
     createDepartment(request).then((response) => {
-      console.log("response", response);
       if (!response.id) {
         if (
           response.error.includes(
@@ -74,7 +73,6 @@ export const CreateDepartment = () => {
           setError(response.error.slice(1, -1));
         }
       } else {
-        console.log("response-id", response.id);
         navigate(`/department/${response.id}`);
       }
     });

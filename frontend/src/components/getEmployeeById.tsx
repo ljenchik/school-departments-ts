@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getEmployeeById } from "../apiClient";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
 import { deleteEmployeeById } from "../apiClient";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -12,8 +11,9 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { Employee } from "../models/employeeModel";
 import { confirm } from "react-confirm-box";
+import { createBrowserHistory } from 'history'
 
-export const GetEmployeeById = () => {
+export const GetEmployeeById = (props) => {
   const [employee, setEmployee] = useState<Employee>();
   const params = useParams();
   const employee_id = params.id;
@@ -25,6 +25,12 @@ export const GetEmployeeById = () => {
       cancellable: "No",
     },
   };
+
+  const history = createBrowserHistory();
+
+  const backToSearch = () => {
+          history.go(-1);
+    }
 
   useEffect(() => {
     getEmployeeById(Number(employee_id)).then((response) => {
@@ -178,10 +184,13 @@ export const GetEmployeeById = () => {
         )}
         <br />
         <div className="d-flex flex-row">
-          <Button className="btn btn-success my-2" onClick={updateEmployee}>
+          <Button className="btn btn-success my-2" onClick={backToSearch}>
+            Back
+          </Button>
+          <Button className="btn btn-success mx-3 my-2" onClick={updateEmployee}>
             Update
           </Button>
-          <Button className="mx-2 my-2" onClick={deleteEmployee}>
+          <Button className=" my-2" onClick={deleteEmployee}>
             Delete
           </Button>
         </div>

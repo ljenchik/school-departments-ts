@@ -1,6 +1,5 @@
 import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Container from "react-bootstrap/esm/Container";
 import "../css/employeeTable.css";
 
 export const EmployeeDepartmentTable = ({ employees }) => {
