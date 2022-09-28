@@ -22,7 +22,7 @@ const Paths = () => {
       <Route path="/employee/:id" element={<GetEmployeeById />}></Route>
       <Route path="/department/:id/employee/create" element={<CreateEmployee />}></Route>
       <Route path="/employee/:id/update" element={<UpdateEmployee />}></Route>
-      {/* <Route path="/employee?from=:from&to=:to" element={<GetAllEmployees />}></Route> */}
+      <Route path="/employee?from=:from&to=:to" element={<GetAllEmployees />}></Route>
     </Routes>
   );
 };

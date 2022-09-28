@@ -2,7 +2,7 @@ import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../css/employeeTable.css";
 
-export const EmployeeTable = ({ employees, location }) => {
+export const EmployeeTable = ({ employees }) => {
   if (employees === undefined) {
     return <div style={{ color: "red" }}>Loading data ... </div>;
   }

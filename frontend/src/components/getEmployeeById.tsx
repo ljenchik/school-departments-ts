@@ -13,7 +13,7 @@ import { Employee } from "../models/employeeModel";
 import { confirm } from "react-confirm-box";
 import { createBrowserHistory } from 'history'
 
-export const GetEmployeeById = (props) => {
+export const GetEmployeeById = () => {
   const [employee, setEmployee] = useState<Employee>();
   const params = useParams();
   const employee_id = params.id;
@@ -25,9 +25,8 @@ export const GetEmployeeById = (props) => {
       cancellable: "No",
     },
   };
-
+  
   const history = createBrowserHistory();
-
   const backToSearch = () => {
           history.go(-1);
     }
