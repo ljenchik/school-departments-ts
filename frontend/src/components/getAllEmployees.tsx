@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getAllEmployees, getAllEmployeesByDob } from "../apiClient";
-import { EmployeeTable } from "./employeeTable";
 import Container from "react-bootstrap/esm/Container";
 import { getAllDepartments } from "../apiClient";
 import { useNavigate } from "react-router-dom";
@@ -9,23 +8,16 @@ import "../css/getAllEmployees.css";
 import { Employee } from "../models/employeeModel";
 import { Department } from "../models/departmentModels";
 import { EmployeeTableDOB } from "./employeeTableDOB";
-import { useSearchParams} from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export const GetAllEmployees = () => {
-  const [employees, setEmployees] = useState<Employee[]>();
+  const [employeesByDob, setEmployeesByDob] = useState<Employee[]>();
   const [departments, setDepartments] = useState<Department[]>([]);
-
   const [departmentName, setDepartmentName] = useState<string>();
-  const [searchTableDisplay, setSearchTableDisplay] = useState(false);
-
-  const [startDate, setStartDate] = useState<any>();
-  const [endDate, setEndDate] = useState<any>();
-
   const [isDisabled, setDisabled] = useState(true);
-  const [employeesByDob, setEmployeesByDob] = useState([]);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = { from: searchParams.get("from"), to: searchParams.get("to") };
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const [startDate, setStartDate] = useState<any>(searchParams.get("from"));
+  const [endDate, setEndDate] = useState<any>(searchParams.get("to"));
 
   const navigate = useNavigate();
 
@@ -34,19 +26,6 @@ export const GetAllEmployees = () => {
   }) => {
     setDepartmentName(event.target.value);
   };
-
-  useEffect(() => {
-    getAllEmployees().then((response) => setEmployees(response.employees));
-    getAllDepartments().then((response) =>
-      setDepartments(response.departments)
-    );
-    if (query.from && query.to) {
-      getAllEmployeesByDob(query.from, query.to).then((response) => {
-        setEmployeesByDob(response.employees);
-        setSearchTableDisplay(true);
-      });
-    }
-  }, []);
 
   const submit = () => {
     for (let i = 0; i < departments.length; i++) {
@@ -59,81 +38,69 @@ export const GetAllEmployees = () => {
     }
   };
 
-  const startDateValue = (): string => {
-    if (query.from) {
-      return query.from;
-    } else {
-      return startDate;
-    }
-  };
-
-  const endDateValue = (): string => {
-    if (query.to) {
-      return query.to;
-    } else {
-      return endDate;
-    }
-  };
-
   const handleChangeStartDate = (event: {
     target: { value: string | Date };
   }) => {
-    const start = new Date(event.target.value).toISOString().slice(0, 10);
-    setStartDate(start);
-    if (startDate !== "dd/mm/yyyy") {
-      setDisabled(false);
+    try {
+      const start = new Date(event.target.value).toISOString().slice(0, 10);
+      setStartDate(start);
+    } catch (err) {
+      setStartDate("dd/mm/yyyy");
     }
+    setDisabled(false);
   };
 
-  const handleChangeEndDate = (event: {
-    target: { value: string | Date };
-  }) => {
-    const end = new Date(event.target.value).toISOString().slice(0, 10);
-    setEndDate(end);
-    if (endDate !== "dd/mm/yyyy") {
-      setDisabled(false);
+  const handleChangeEndDate = (event: { target: { value: string | Date } }) => {
+    try {
+      const end = new Date(event.target.value).toISOString().slice(0, 10);
+      setEndDate(end);
+    } catch (err) {
+      setEndDate("dd/mm/yyyy");
     }
+    setDisabled(false);
   };
 
   const search = () => {
-    if (startDate === "dd/mm/yyyy" && endDate === "dd/mm/yyyy") {
-      setDisabled(true);
-    } else if (
-      startDate !== "dd/mm/yyyy" &&
-      (endDate === "dd/mm/yyyy" || endDate === undefined)
-    ) {
-      const to = new Date().toJSON().slice(0, 10);
-      getAllEmployeesByDob(startDate, to).then((response) => {
-        setEmployeesByDob(response.employees);
-        setSearchTableDisplay(true);
-        setSearchParams({'from': startDate, 'to': to})
-      });
-    } else if (
-      (startDate === "dd/mm/yyyy" || startDate === undefined) &&
-      endDate !== "dd/mm/yyyy"
-    ) {
-      const from = "1900-01-01";
-      getAllEmployeesByDob(from, endDate).then((response) => {
-        setEmployeesByDob(response.employees);
-        setSearchTableDisplay(true);
-        setSearchParams({'from': from, 'to': endDate})
-      });
+   
+    if (startDate && endDate) {
+      setSearchParams({from:startDate, to: endDate});
+    } else  if (endDate) {
+      setSearchParams({to: endDate});
+    } else  if (startDate) {
+      setSearchParams({from: startDate});
     } else {
-      getAllEmployeesByDob(startDate, endDate).then((response) => {
-        setEmployeesByDob(response.employees);
-        setSearchTableDisplay(true);
-        setSearchParams({'from': startDate, 'to': endDate})
-      });
+      setSearchParams({});
     }
+    setDisabled(true);
+    
   };
+
+  useEffect(() => {
+    getAllDepartments().then((response) =>
+      setDepartments(response.departments)
+    );
+  }, []);
+
+  useEffect(() => {
+    let start = searchParams.get("from") ?? "1900-01-01";
+    let end = searchParams.get("to") ?? "3000-01-01";
+
+    getAllEmployeesByDob(start, end).then((response) => {
+      setEmployeesByDob(response.employees);
+    });
+
+    setStartDate(searchParams.get("from"))
+    console.log("searchParamsFrom", searchParams.get("from"));
+    setEndDate(searchParams.get("to"))
+    console.log("startDate", startDate)
+  }, [searchParams]);
 
   const reset = () => {
     getAllEmployees().then((response) => {
-      setEmployees(response.employees);
-      setSearchTableDisplay(false);
-      setStartDate("dd/mm/yyyy");
+      setStartDate(null);
+      console.log(startDate)
       setEndDate("dd/mm/yyyy");
-      setSearchParams()
+      setSearchParams({});
       setDisabled(true);
     });
   };
@@ -144,17 +111,9 @@ export const GetAllEmployees = () => {
       <label className="add-dep-label">
         Filter employees by date of birth from
       </label>
-      <input
-        type="date"
-        onChange={handleChangeStartDate}
-        value={startDateValue()}
-      />
+      <input type="date" onChange={handleChangeStartDate} value={startDate} />
       <label className="add-dep-label">to</label>
-      <input
-        type="date"
-        onChange={handleChangeEndDate}
-        value={endDateValue()}
-      />
+      <input type="date" onChange={handleChangeEndDate} value={endDate} />
       <Button
         className="btn btn-success my-3 mx-2"
         onClick={search}
@@ -163,18 +122,10 @@ export const GetAllEmployees = () => {
         Search
       </Button>
 
-      <Button
-        className="btn btn-success my-3 mx-2"
-        onClick={reset}
-      >
+      <Button className="btn btn-success my-3 mx-2" onClick={reset}>
         Reset
       </Button>
-      {searchTableDisplay ? (
-        <EmployeeTableDOB employees={employeesByDob} />
-      ) : (
-        <EmployeeTable employees={employees} />
-      )}
-
+      <EmployeeTableDOB employees={employeesByDob} />
       <br />
       <label className="add-dep-label">Add employee to department</label>
       <select
@@ -195,4 +146,3 @@ export const GetAllEmployees = () => {
     </Container>
   );
 };
-

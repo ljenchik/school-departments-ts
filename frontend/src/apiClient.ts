@@ -316,7 +316,7 @@ export async function deleteEmployeeById(id: number) {
 }
 
 export async function getAllEmployeesByDob(
-  from: Date | string | undefined,
+  from: any,
   to: any
 ) {
   try {
