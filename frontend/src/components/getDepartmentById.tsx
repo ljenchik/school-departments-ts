@@ -29,7 +29,7 @@ export const GetDepartmentById = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getDepartmentById(Number(department_id)).then((response) => {
+     getDepartmentById(Number(department_id)).then((response) => {
       if (response.department.created_at) {
         response.department.created_at =
           response.department.created_at.split("T")[0];

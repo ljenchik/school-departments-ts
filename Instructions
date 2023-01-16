@@ -10,9 +10,9 @@ Backend
     npm i express knex pg
 
 '''
-    express — Creates our restful API
-    knex — Our javascript SQL query builder (Makes development easier as a javascript developer).
-    pg — Our client to connect and talk to your Postgres database
+    express — creates our restful API
+    knex — javascript SQL query builder (makes development easier as a javascript developer).
+    pg — client to connect and talk to your Postgres database
 '''
 
 3. In backend folder create index.ts file with the following content:
@@ -50,7 +50,6 @@ Backend
 5. Create file docker-compose.yml and migrations folder inside backend folder.
 '''
     Content of docker-compose.yml:
-    '''
         version: "3.9"
 
         services:
@@ -62,7 +61,6 @@ Backend
             - POSTGRES_DB=School-ts
             ports:
             - "5432:5432"
-    '''
 '''
 
 6. Start docker container docker-compose up -d
@@ -82,7 +80,7 @@ npm install --save-dev ts-node typescript
     knex migrate:make create_department_table
 
 14. Add to scripts in package.json:
-    "migrate": "knex migrate:latest --knexfile db/knexfile.js"
+    "migrate": "knex migrate:latest --knexfile db/knexfile.ts"
 
 15. npm run migrate
 

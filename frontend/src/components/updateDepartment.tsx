@@ -67,7 +67,6 @@ export const UpdateDepartment = () => {
         setIsDisabled(false);
         setError("")
       }
-
       
       setDepartment({ ...department, image: department.image });
   };
