@@ -1,3 +1,13 @@
+.dep-container {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   justify-content: flex-start;
+   margin: 40px 0 0 auto;
+   width: 90%;
+   gap: 20px;
+}
+
 .add-link {
     text-decoration: none;
     color:  green;
@@ -10,10 +20,14 @@
  .link-dep-name {
     font-size: 20px;
     color: navy;
+    text-align: center;
  }
+
  
  .link-dep-name:hover {
     color: green !important;
+    cursor: pointer;
+    
  }
 
  .link-dep-logo {
@@ -24,3 +38,7 @@
    border-radius: 10px;
  }
 
+ .card-body:hover {
+   box-shadow: inset 0px 0px 8px rgb(218, 230, 241), 0 0 15px #5c568d;
+ }
+ 
