@@ -48,6 +48,10 @@ input, select {
   margin-left: 20px;
 }
 
+.link:hover {
+  color: green !important;
+}
+
 .btn {
   font-family: Arial, Helvetica, sans-serif !important;
 }

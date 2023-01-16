@@ -1,14 +1,45 @@
-.link {
-    text-decoration: none;
-    margin-top: 20px;
-}
-
-.link:hover {
-    color: green !important;
-}
-
 .error{
    padding-top: 30px;
     margin-left: 10px;
  }
 
+.create-employee-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+ }
+
+ .create-employee-container .title {
+    margin: 20px 0 0 100px;
+ }
+
+
+ .create-employee-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+ }
+
+
+ label {
+    float: left;
+    width: 10em;
+    margin-right: 1em;
+    text-align: right;
+ }
+
+ .buttons  {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    float: right;
+ }
+
+ .links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+ }

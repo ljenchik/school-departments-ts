@@ -25,14 +25,6 @@
     margin-bottom: 20px;
 }
 
- .link {
-    text-decoration: none !important;
-}
-
-.link:hover {
-    color: green !important;
-}
- 
 .department-image {
     width: 20%;
     padding-bottom: 20px;
