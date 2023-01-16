@@ -1,0 +1,23 @@
+nav .container {
+    background-color: rgb(212, 231, 241);
+    max-width: 100%;
+    padding: 5px 20px;
+}
+
+.navbar, .navbar-expand-lg {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+.navbar-brand {
+    font-size: 25px !important;
+    font-family: 'Bree Serif', serif;
+    color: navy !important;
+}
+
+.nav-link {
+    font-size: 20px !important;
+    font-family: 'Bree Serif', serif;
+    color: navy !important;
+
+}

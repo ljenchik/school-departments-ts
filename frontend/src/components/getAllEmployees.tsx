@@ -115,14 +115,14 @@ export const GetAllEmployees = () => {
       <label className="add-dep-label">to</label>
       <input type="date" onChange={handleChangeEndDate} value={endDate} />
       <Button
-        className="btn btn-success my-3 mx-2"
+        className="btn btn-success my-3 mx-2 custom"
         onClick={search}
         disabled={isDisabled}
       >
         Search
       </Button>
 
-      <Button className="btn btn-success my-3 mx-2" onClick={reset}>
+      <Button className="btn btn-success my-3 mx-2 custom" onClick={reset}>
         Reset
       </Button>
       <EmployeeTableDOB employees={employeesByDob} />
@@ -140,7 +140,7 @@ export const GetAllEmployees = () => {
         <option>Add department</option>
       </select>
 
-      <Button className="btn btn-success my-3 mx-2" onClick={submit}>
+      <Button className="btn btn-success my-3 mx-2 custom" onClick={submit}>
         Submit
       </Button>
     </Container>

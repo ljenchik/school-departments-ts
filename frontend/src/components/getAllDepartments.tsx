@@ -25,9 +25,9 @@ export const GetAllDepartments = () => {
 
   return (
     <Container >
-      <h4 className="title">Departments</h4>
+      <h2 className="title">Departments</h2>
       <br />
-      <Carousel cols={3} rows={1} gap={20} loop style={{ margin: "0px" }}>
+      <Carousel cols={4} rows={1} gap={20} loop style={{ margin: "0px" }}>
         {departments.map(
           (department: {
             id: any;
@@ -36,8 +36,8 @@ export const GetAllDepartments = () => {
           }) => (
             <Carousel.Item>
               <Link to={`/department/${department.id}`} className="link">
-                <div>{department.department_name}</div>
-                <img width="100%" src={department.image} />
+                <div className="link-dep-name">{department.department_name}</div>
+                <img src={department.image} className="link-dep-logo"/>
               </Link>
             </Carousel.Item>
           )
@@ -45,10 +45,10 @@ export const GetAllDepartments = () => {
 
         <Carousel.Item>
           <Link to={`/department/create`} className="link">
-            <div>Add new department</div>
+            <div className="link-dep-name">Add new department</div>
             <img
-              width="100%"
               src="https://www.villageofallouezwi.gov/wp-content/uploads/2013/04/departments.jpg"
+              className="link-dep-logo"
             />
           </Link>
         </Carousel.Item>

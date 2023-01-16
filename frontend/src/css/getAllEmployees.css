@@ -14,3 +14,11 @@
 .title {
     margin-top: 70px;
 }
+
+
+input, select {
+    font-family: Arial, Helvetica, sans-serif !important;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+ }

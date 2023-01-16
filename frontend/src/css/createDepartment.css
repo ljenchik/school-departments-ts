@@ -1,20 +1,27 @@
-
 .dep-name-input {
-    width: 60vw;
     margin-top: 10px;
     margin-bottom: 20px;
+    margin-left: 10px;
+    width: 40vw;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: sans-serif;
 }
 
  .error-message {
     margin-left: 20px;
     align-self: center;
  }
+
 .title {
     margin-top: 70px;
 }
- .link {
+
+ 
+.link {
     text-decoration: none !important;
 }
+
 
 .link:hover {
     color: green !important;
@@ -23,4 +30,10 @@
 .error-message {
     margin-left: 20px;
     align-self: center;
+}
+
+.custom {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 20px !important;
+    margin-left: 10px;
 }

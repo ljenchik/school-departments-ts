@@ -124,7 +124,7 @@ export const CreateDepartment = () => {
           </div>
           <div className="d-flex">
             <Button
-              className="btn btn-success my-3"
+              className="btn btn-success my-3 custom"
               onKeyDown={handleKeyPress}
               onClick={submit}
             >
