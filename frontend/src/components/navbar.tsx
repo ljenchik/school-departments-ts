@@ -5,12 +5,19 @@ import "../css/navbar.css";
 
 export function Menu() {
   return (
-    <Navbar bg="light" expand="lg" fixed="top">
-      <Container>
-        <Navbar.Brand href="/">Departments</Navbar.Brand>
-        <Navbar.Brand href="/employee">Employees</Navbar.Brand>
-        <Nav.Link href="/department/create">Add department</Nav.Link>
-      </Container>
-    </Navbar>
+    <nav id="navBar">
+        <div id="navigation">
+          <a href="/"><span>Departments</span></a>
+         <a href="/employee"><span>Employees</span></a>
+          <a href="/department/create"><span>Add department</span></a>
+        </div>
+      </nav>
+
+
+
+
+
+
+    
   );
 }

@@ -74,18 +74,21 @@ export const GetDepartmentById = () => {
       navigate(`/department/${department_id}/update`);
     });
   };
+
+  const routeChange = ()=> {
+    navigate(`/department/${department_id}/employee/create`);
+  }
+
   if (department === undefined) {
     return <div>Loading report ...</div>;
   } else {
     return (
       <div>
         <Container>
-          <div>
-            <img className="department-image" src={department.image} />
-
-            <h4>{department.department_name}</h4>
-            <br />
-
+          <div className="get-department-container">
+          <h2 className="title">{department.department_name}</h2>
+          <img className="department-image" src={department.image} />
+         
             {department.count === 1 ? 
               (<div><p>There is {department.count} employee in this department</p>
               <p>Department average salary is £{department.avg}</p></div>)
@@ -96,8 +99,6 @@ export const GetDepartmentById = () => {
              <p>Department average salary is £{department.avg}</p></div>)
             )}
             
-            
-          </div>
           <p className="created_at">
             Department was created on {department.created_at}
           </p>
@@ -121,24 +122,27 @@ export const GetDepartmentById = () => {
                 Delete
               </Button>
             </div>
+
+            <div>
+              <Button className="my-4" onClick={routeChange}>
+              Add employee
+              </Button>
+            </div> 
+
             <p className="error">
               {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
             </p>
           </div>
 
-          <br />
-
           {department.count === 0 ? "" : <EmployeeDepartmentTable employees={employees} />}
 
-          <br />
-          <Link
+          {/* <Link
             to={`/department/${department_id}/employee/create`}
             className="link"
           >
-            {" "}
             Add employee to {department.department_name}
-          </Link>
-          <br />
+          </Link> */}
+          </div>
         </Container>
       </div>
     );

@@ -21,3 +21,40 @@ nav .container {
     color: navy !important;
 
 }
+
+#navBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgb(212, 231, 241);
+    color: navy !important;
+    width: 100%;
+    height: 100px;
+  }
+  
+  #navBar h1 {
+    padding-bottom: 8px;
+    color: navy;
+    font-size: 30px;
+  }
+  
+  #navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-right: 20px;
+  }
+  
+  #navigation a {
+    margin: 10px;
+    font-size: 25px;
+    color: navy;
+    text-decoration: none;
+  }
+  
+  #navigation a:hover {
+    border-bottom: 3px solid navy;
+  }
