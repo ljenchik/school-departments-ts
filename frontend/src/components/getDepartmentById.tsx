@@ -79,6 +79,11 @@ export const GetDepartmentById = () => {
     navigate(`/department/${department_id}/employee/create`);
   }
 
+  const backToAllDepartments = () => {
+    navigate("/");
+  }
+
+
   if (department === undefined) {
     return <div>Loading report ...</div>;
   } else {
@@ -124,8 +129,14 @@ export const GetDepartmentById = () => {
             </div>
 
             <div>
-              <Button className="my-4" onClick={routeChange}>
+              <Button className="mx-2 my-4" onClick={routeChange}>
               Add employee
+              </Button>
+            </div> 
+
+            <div>
+              <Button className="my-4" onClick={backToAllDepartments}>
+              Back to all departments
               </Button>
             </div> 
 
@@ -136,12 +147,7 @@ export const GetDepartmentById = () => {
 
           {department.count === 0 ? "" : <EmployeeDepartmentTable employees={employees} />}
 
-          {/* <Link
-            to={`/department/${department_id}/employee/create`}
-            className="link"
-          >
-            Add employee to {department.department_name}
-          </Link> */}
+         
           </div>
         </Container>
       </div>

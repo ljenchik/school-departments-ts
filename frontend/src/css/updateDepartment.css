@@ -1,5 +1,26 @@
+.update-dep-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.update-dep-container img {
+    width: 300px;
+    border-radius: 10px;
+    margin: 20px;
+    padding-bottom: 0;
+}
+
+
+.update-input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    color: navy;
+}
+
 .department-data-input {
-    width: 65vw;
+    width: 50vw;
     margin-top: 10px;
     margin-bottom: 20px;
 }
