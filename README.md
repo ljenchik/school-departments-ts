@@ -34,3 +34,41 @@ npm start
 
 ### Home Page
 
+Home page of School Departments application displays a list of departments. Every department is highlighted while hovering and links to the page with the information about it.
+
+<p float="left">
+<img src="assets/home1.png" width="200"/>
+<img src="assets/home2.png" width="200"/>
+<img src="assets/department1.png" width="200"/>
+</p>
+
+### Department Page
+
+A user can update the department information: change name and/or logo. It also possible to delete department, but only if the department doesn't have emloyees, otherwise, an error message will be displayed.
+
+<p float="left">
+<img src="assets/deleteDepartment.png" width="200"/>
+<img src="assets/noDelete.png" width="200"/>
+</p>
+
+After adding employees the department page shows an average salary of department, number of employees and a list of all employees in a table.
+
+<p float="left">
+<img src="assets/departmentWithEmployees.png" width="200"/>
+</p>
+
+### Employee Page
+
+Clicking on the name in the table allows to access the employee profile with a detailed information, which can be updated and/or deleted.
+
+<p float="left">
+<img src="assets/profile.png" width="200"/>
+</p>
+
+### Employees Page
+
+To access all employees the user has to click on the Employees link at the top. A table with a list of employees will be displayed as well as search options.
+
+<p float="left">
+<img src="assets/employees1.png" width="200"/>
+</p>

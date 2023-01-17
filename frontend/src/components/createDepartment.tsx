@@ -95,36 +95,37 @@ export const CreateDepartment = () => {
   };
 
   return (
-    <div>
-      <Container>
+      <Container className="create-department-container">
         <h4 className="title">Add a new department</h4>
-        <fieldset className="fieldset" onKeyDown={handleKeyPress}>
-          <div>
-            <label>
-              <input
-                className="dep-name-input"
+        <fieldset onKeyDown={handleKeyPress}>
+        
+        <div className="dep-name-input">
+            <label>Name</label>
+            <input
+                className="input-large-large search-query my-2 mb-3"
                 type="text"
+                style={{ width: "55%" }}
                 placeholder="Enter department name"
                 value={department.department_name}
                 onChange={(event) => handleChangeDepartmentName(event)}
               ></input>
-            </label>
           </div>
 
-          <div>
-            <label>
+          <div className="dep-name-input">
+            <label>Department logo</label>
               <input
-                className="dep-name-input"
+                className="input-large-large search-query my-2 mb-3"
                 type="url"
+                style={{ width: "55%" }}
                 placeholder="http://image.jpg"
                 value={department.image}
                 onChange={(event) => handleChangeDepartmentImage(event)}
               ></input>
-            </label>
           </div>
+          
           <div className="d-flex">
             <Button
-              className="btn btn-success my-3 custom"
+              className="btn btn-success my-3"
               onKeyDown={handleKeyPress}
               onClick={submit}
             >
@@ -140,14 +141,6 @@ export const CreateDepartment = () => {
             )}
           </div>
         </fieldset>
-        <br />
-        <div>
-          <Link to="/" className="link">
-            {" "}
-            View all departments{" "}
-          </Link>
-        </div>
       </Container>
-    </div>
   );
 };

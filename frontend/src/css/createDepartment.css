@@ -1,39 +1,35 @@
-.dep-name-input {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    margin-left: 10px;
-    width: 40vw;
-    padding: 10px;
-    border-radius: 5px;
-    font-family: sans-serif;
+.create-department-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
 }
+
+.create-employee-container .title {
+    margin: 20px 0 0 100px;
+ }
+
+.dep-name-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    float: left;
+    width: 10em;
+    margin-right: 1em;
+    text-align: right;
+    color: navy;
+ }
 
  .error-message {
     margin-left: 20px;
     align-self: center;
  }
 
-.title {
-    margin-top: 70px;
-}
-
- 
-.link {
-    text-decoration: none !important;
-}
-
-
-.link:hover {
-    color: green !important;
-}
- 
-.error-message {
-    margin-left: 20px;
-    align-self: center;
-}
-
-.custom {
-    font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 20px !important;
-    margin-left: 10px;
+.create-department-container .d-flex {
+    width: 85%;
+    justify-content: flex-end;
 }

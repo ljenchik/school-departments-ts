@@ -175,7 +175,7 @@ export const CreateEmployee = () => {
   } else {
     return (
       <Container className="create-employee-container">
-        <h2 className="title">Add employee to {departmentName}</h2>
+        <h4 className="title">Add employee to {departmentName}</h4>
         <fieldset onKeyDown={handleKeyPress}>
           <div className="create-employee-input">
             <label>Name</label>
