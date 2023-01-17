@@ -7,25 +7,26 @@ import Container from "react-bootstrap/esm/Container";
 import { UpdateDepartmentForm } from "../models/departmentModels";
 import "../css/updateDepartment.css";
 import { validateImage } from "image-validator";
+import defaultDepartmentImage from "../images/defaultDepartmentImage.png";
 
 const urlValidation = async (url: string) => {
   const isValidImage = await validateImage(url);
   return isValidImage;
 };
 
+const defaultImage = defaultDepartmentImage;
+
 export const UpdateDepartment = () => {
   const params = useParams();
   const department_id = params.id;
   const [department, setDepartment] = useState<UpdateDepartmentForm>({
     department_name: "",
-    image: "",
+    image: defaultImage,
     updated_at: "",
   });
+
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const defaultImage =
-    "https://seekvectorlogo.net/wp-content/uploads/2019/03/department-for-education-vector-logo.png";
   const [displayImage, setDisplayImage] = useState<string>(department.image);
-  const [isValidImage, setIsValidImage] = useState<boolean>(true);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -51,16 +52,10 @@ export const UpdateDepartment = () => {
 
     if (department.image !== "" && isValidImage === false) {
       setError("Invalid image url");
-      setIsValidImage(false);
-      setDisplayImage(defaultImage);
       setIsDisabled(true);
-    } else if (department.image === "" && isValidImage === false) {
-      setError("");
-      setIsValidImage(false);
-      setDisplayImage(defaultImage);
+    } else if (department.image === "" || !department.image) {
       setIsDisabled(false);
     } else {
-      setIsValidImage(true);
       setDisplayImage(department.image);
       setIsDisabled(false);
       setError("");
@@ -91,7 +86,7 @@ export const UpdateDepartment = () => {
 
   const backToAllDepartments = () => {
     navigate("/");
-  }
+  };
 
   const handleKeyPress = (event: { keyCode: number }) => {
     if (event.keyCode === 13) {
@@ -106,11 +101,7 @@ export const UpdateDepartment = () => {
       <Container>
         <div className="update-dep-container">
           <h2 className="title">{department.department_name}</h2>
-          {!isValidImage ? (
-            <img className="department-image" src={displayImage} />
-          ) : (
-            <img className="department-image" src={department.image} />
-          )}
+          <img className="department-image" src={department.image} />
           <div className="update-input">
             <label>Update department name</label>
             <input
@@ -125,7 +116,6 @@ export const UpdateDepartment = () => {
             <input
               className="department-data-input"
               type="url"
-              //defaultValue={prevImage}
               value={department.image}
               onChange={(event) => handleChangeDepartmentImage(event)}
             ></input>
