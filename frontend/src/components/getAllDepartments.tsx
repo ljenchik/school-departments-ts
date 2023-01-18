@@ -1,9 +1,4 @@
 import {
-  JSXElementConstructor,
-  Key,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
   useEffect,
   useState,
 } from "react";
@@ -25,7 +20,6 @@ export const GetAllDepartments = () => {
   return (
     <Container>
       <h2 className="title">Departments</h2>
-
       <div className="dep-container">
             {departments.map(
               (department: {
@@ -34,7 +28,7 @@ export const GetAllDepartments = () => {
                 department_name: any;
               }) => (
 
-                  <div className="card">
+                  <div className="card h-90">
                     <div className="card-body">
                       <Link
                         to={`/department/${department.id}`}

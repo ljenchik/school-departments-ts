@@ -2,9 +2,8 @@
    display: flex;
    flex-wrap: wrap;
    flex-direction: row;
-   justify-content: flex-start;
-   margin: 40px 0 0 auto;
-   width: 90%;
+   justify-content: center;
+   margin: 40px;
    gap: 20px;
 }
 
@@ -16,11 +15,18 @@
     padding: 0 10px;
     margin-left: 10px;
  }
+
+ .card {
+   width: 380px !important;
+   align-self: flex-end !important;
+ }
  
  .link-dep-name {
     font-size: 20px;
     color: navy;
     text-align: center;
+    height: 50px;
+    overflow-y: auto;
  }
 
  
@@ -32,7 +38,7 @@
 
  .link-dep-logo {
    margin-top: 20px;
-   width: 300px;
+   width: 350px;
    height: 350px;
    border: 3px double black;
    border-radius: 10px;
