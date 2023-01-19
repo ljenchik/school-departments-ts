@@ -27,15 +27,16 @@ body {
   background-color: rgba(227, 244, 244, 0.541) !important;
 }
 
-main .container {
+main {
   max-width: 100%;
 }
 
-.title {
-  padding: 20px 0 20px 0;
+main .title {
+  padding: 20px;
   text-align: center;
   color: navy;
   font-size: 40px;
+  margin: 20px;
 }
 
 input, select {

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { createDepartment, getDepartmentById } from "../apiClient";
-import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/esm/Container";
+import React, { useState } from "react";
+import { createDepartment} from "../apiClient";
 import { useNavigate } from "react-router-dom";
 import "../css/createDepartment.css";
 import { validateImage } from "image-validator";
 import { Department } from "../models/departmentModels";
-import { MenuDepartment } from "./navbarGetDepartmentById";
 import { Menu } from "./navbarDefault";
+import { Button } from "react-bootstrap";
+import defaultDepartmentImage from "../images/defaultDepartmentImage.png";
 
 const urlValidation = async (url: string) => {
   const isValidImage = await validateImage(url);
   return isValidImage;
 };
+
+const defaultImage = defaultDepartmentImage;
 
 export const CreateDepartment = () => {
   const [department, setDepartment] = useState<Department>({
@@ -59,8 +59,7 @@ export const CreateDepartment = () => {
     if (department.image && (await urlValidation(department.image))) {
       request.image = department.image;
     } else {
-      request.image =
-        "https://seekvectorlogo.net/wp-content/uploads/2019/03/department-for-education-vector-logo.png";
+      request.image = defaultImage;
     }
 
     createDepartment(request).then((response) => {
@@ -78,16 +77,6 @@ export const CreateDepartment = () => {
         navigate(`/department/${response.id}`);
       }
     });
-
-    // } else if (!department.image) {
-    //   request.image =
-    //     "https://seekvectorlogo.net/wp-content/uploads/2019/03/department-for-education-vector-logo.png";
-    //   createDepartment(request).then((response) => {
-    //     navigate(`/department/${department.id}`);
-    //   });
-    // } else if ((await urlValidation(department.image)) === false) {
-    //   setError("Enter a valid image url");
-    // }
   };
 
   const handleKeyPress = (event: { keyCode: number }) => {
@@ -97,8 +86,11 @@ export const CreateDepartment = () => {
   };
 
   return (
-      <Container className="create-department-container">
-        <Menu />
+    <div>
+      <header> <Menu /></header>
+      <main>
+      <div className="create-department-container">
+       
         <h4 className="title">Add a new department</h4>
         <fieldset onKeyDown={handleKeyPress}>
         
@@ -134,7 +126,6 @@ export const CreateDepartment = () => {
             >
               Submit
             </Button>
-
             {error !== "" ? (
               <p className="error-message" style={{ color: "red" }}>
                 {error}
@@ -144,6 +135,8 @@ export const CreateDepartment = () => {
             )}
           </div>
         </fieldset>
-      </Container>
+        </div>
+        </main>
+    </div>
   );
 };

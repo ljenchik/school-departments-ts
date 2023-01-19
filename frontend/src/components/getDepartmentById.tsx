@@ -1,13 +1,11 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   getDepartmentById,
   deleteDepartmentById,
   getEmployeesByDepartmentId,
 } from "../apiClient";
-import Container from "react-bootstrap/esm/Container";
 import "../css/getDepartmentById.css";
-import { Button } from "react-bootstrap";
 import { confirm } from "react-confirm-box";
 import { Employee } from "../models/employeeModel";
 import { DepartmentEmployee } from "../models/departmentModels";
@@ -85,8 +83,8 @@ export const GetDepartmentById = () => {
   } else {
     return (
       <div>
-        <Container>
-          <MenuDepartment />
+        <header><MenuDepartment /></header>
+          <main>
           <div className="get-department-container">
             <header className="header-container">
               <img className="department-image" src={department.image} />
@@ -115,7 +113,7 @@ export const GetDepartmentById = () => {
           {department.count === 0 ? "" : <EmployeeDepartmentTable employees={employees} />}
          
           </div>
-        </Container>
+        </main>
       </div>
     );
   }

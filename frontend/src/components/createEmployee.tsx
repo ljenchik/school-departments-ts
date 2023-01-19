@@ -8,6 +8,7 @@ import "../css/createEmployee.css";
 import { Employee } from "../models/employeeModel";
 import { MenuAddEmployee } from "./navbarCreateEmployee";
 
+
 export const CreateEmployee = () => {
   const params = useParams();
   const department_id = Number(params.id);
