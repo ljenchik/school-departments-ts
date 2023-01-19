@@ -1,17 +1,15 @@
 import "../css/navbar.css";
 
-export function Menu() {
+export function MenuAddEmployee ({departmentImage}) {
   return (
     <nav id="navBar">
+        <img className="department-image" src={departmentImage} />
       <div id="navigation">
         <a href="/">
           <span>Departments</span>
         </a>
-        <a href="/employee">
+        <a href={`/employee`}>
           <span>Employees</span>
-        </a>
-        <a href="/department/create">
-          <span>Add department</span>
         </a>
       </div>
     </nav>

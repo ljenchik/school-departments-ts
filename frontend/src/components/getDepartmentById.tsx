@@ -12,6 +12,7 @@ import { confirm } from "react-confirm-box";
 import { Employee } from "../models/employeeModel";
 import { DepartmentEmployee } from "../models/departmentModels";
 import { EmployeeDepartmentTable } from "./employeeDepartmentTable";
+import { MenuDepartment } from "./navbarDepartment";
 
 export const GetDepartmentById = () => {
   const params = useParams();
@@ -79,21 +80,19 @@ export const GetDepartmentById = () => {
     navigate(`/department/${department_id}/employee/create`);
   }
 
-  const backToAllDepartments = () => {
-    navigate("/");
-  }
-
-
   if (department === undefined) {
     return <div>Loading report ...</div>;
   } else {
     return (
       <div>
         <Container>
+          <MenuDepartment />
           <div className="get-department-container">
-          <h2 className="title">{department.department_name}</h2>
-          <img className="department-image" src={department.image} />
-         
+            <header className="header-container">
+              <img className="department-image" src={department.image} />
+              <h2 className="title">{department.department_name}</h2>
+            </header>
+          
             {department.count === 1 ? 
               (<div><p>There is {department.count} employee in this department</p>
               <p>Department average salary is £{department.avg}</p></div>)
@@ -113,40 +112,7 @@ export const GetDepartmentById = () => {
             ""
           )}
 
-          <div className="d-flex flex-row">
-            <div>
-              <Button
-                className="btn btn-success my-4"
-                onClick={updateDepartment}
-              >
-                Update
-              </Button>
-            </div>
-            <div>
-              <Button className="mx-2 my-4" onClick={deleteDepartment}>
-                Delete
-              </Button>
-            </div>
-
-            <div>
-              <Button className="mx-2 my-4" onClick={routeChange}>
-              Add employee
-              </Button>
-            </div> 
-
-            <div>
-              <Button className="my-4" onClick={backToAllDepartments}>
-              Back to all departments
-              </Button>
-            </div> 
-
-            <p className="error">
-              {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
-            </p>
-          </div>
-
           {department.count === 0 ? "" : <EmployeeDepartmentTable employees={employees} />}
-
          
           </div>
         </Container>

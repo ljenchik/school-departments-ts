@@ -31,7 +31,7 @@ const Paths = () => {
 const App = () => {
   return (
     <Router>
-      <Menu />
+      {/* <Menu /> */}
       <main>
         <Paths />
       </main>

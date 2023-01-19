@@ -3,12 +3,25 @@
     margin-left: 10px;
  }
 
+
 .create-employee-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
+    padding: 0px;
+    width: 100%;
  }
+
+ .create-employee-container .department-image {
+   width: 150px;
+   border-radius: 10px;
+   border: 1px double navy;
+   margin: 30px 20px 0 20px;
+   padding-bottom: 0;
+   align-self: center;
+}
+
 
  .create-employee-container .title {
     margin: 20px 0 0 100px;

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "../css/getAllDepartments.css";
 import { Container } from "react-bootstrap";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Menu } from "./navbar";
 
 export const GetAllDepartments = () => {
   const [departments, setDepartments] = useState<any>([]);
@@ -19,6 +20,7 @@ export const GetAllDepartments = () => {
 
   return (
     <Container>
+      <Menu />
       <h2 className="title">Departments</h2>
       <div className="dep-container">
             {departments.map(

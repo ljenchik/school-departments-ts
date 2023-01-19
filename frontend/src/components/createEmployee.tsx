@@ -5,14 +5,15 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getDepartmentById } from "../apiClient";
-import { Container } from "react-bootstrap";
 import "../css/createEmployee.css";
 import { Employee } from "../models/employeeModel";
+import { MenuAddEmployee } from "./navbarAddEmployee";
 
 export const CreateEmployee = () => {
   const params = useParams();
   const department_id = Number(params.id);
   const [departmentName, setDepartmentName] = useState("");
+  const [departmentImage, setDepartmentImage] = useState("");
   const [employee, setEmployee] = useState<Employee>({
     id: null,
     name: "",
@@ -39,6 +40,7 @@ export const CreateEmployee = () => {
   useEffect(() => {
     getDepartmentById(Number(department_id)).then((response) => {
       setDepartmentName(response.department.department_name);
+      setDepartmentImage(response.department.image);
     });
   }, []);
 
@@ -174,7 +176,8 @@ export const CreateEmployee = () => {
     return <div>Loading ...</div>;
   } else {
     return (
-      <Container className="create-employee-container">
+      <main className="create-employee-container">
+        <MenuAddEmployee departmentImage={departmentImage}/>
         <h4 className="title">Add employee to {departmentName}</h4>
         <fieldset onKeyDown={handleKeyPress}>
           <div className="create-employee-input">
@@ -319,22 +322,11 @@ export const CreateEmployee = () => {
         <div className="links">
           <div>
             <Link to={`/department/${department_id}`} className="link">
-              Employees of {departmentName}
+              Back to {departmentName}
             </Link>
           </div>
-          <div>
-            <Link to="/employee" className="link">
-              Employees
-            </Link>
-          </div>
-          <div>
-            <Link to="/" className="link">
-              Departments
-            </Link>
-          </div>
-          
         </div>
-      </Container>
+      </main>
     );
   }
 };

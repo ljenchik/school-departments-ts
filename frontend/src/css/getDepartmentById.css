@@ -1,3 +1,8 @@
+.dep-actions {
+  display: flex;
+  flex-direction: row;
+
+}
 .get-department-container {
   display: flex;
   flex-direction: column;
@@ -5,13 +10,22 @@
 }
 
 .get-department-container .title {
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .get-department-container .department-image {
-    width: 300px;
+    width: 200px;
+    height: 200px;
     border-radius: 10px;
-    margin: 20px;
+    border: 1px double navy;
+    margin-top: 30px;
     padding-bottom: 0;
 }
 
