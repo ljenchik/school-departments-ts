@@ -12,7 +12,7 @@ import { confirm } from "react-confirm-box";
 import { Employee } from "../models/employeeModel";
 import { DepartmentEmployee } from "../models/departmentModels";
 import { EmployeeDepartmentTable } from "./employeeDepartmentTable";
-import { MenuDepartment } from "./navbarDepartment";
+import { MenuDepartment } from "./navbarGetDepartmentById";
 
 export const GetDepartmentById = () => {
   const params = useParams();

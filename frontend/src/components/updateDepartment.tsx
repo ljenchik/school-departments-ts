@@ -8,6 +8,7 @@ import { UpdateDepartmentForm } from "../models/departmentModels";
 import "../css/updateDepartment.css";
 import { validateImage } from "image-validator";
 import defaultDepartmentImage from "../images/defaultDepartmentImage.png";
+import { MenuDepartment } from "./navbarGetDepartmentById";
 
 const urlValidation = async (url: string) => {
   const isValidImage = await validateImage(url);
@@ -99,6 +100,7 @@ export const UpdateDepartment = () => {
   } else {
     return (
       <Container>
+        <MenuDepartment />
         <div className="update-dep-container">
           <h2 className="title">{department.department_name}</h2>
           <img className="department-image" src={department.image} />

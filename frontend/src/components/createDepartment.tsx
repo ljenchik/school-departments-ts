@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import "../css/createDepartment.css";
 import { validateImage } from "image-validator";
 import { Department } from "../models/departmentModels";
+import { MenuDepartment } from "./navbarGetDepartmentById";
+import { Menu } from "./navbarDefault";
 
 const urlValidation = async (url: string) => {
   const isValidImage = await validateImage(url);
@@ -96,6 +98,7 @@ export const CreateDepartment = () => {
 
   return (
       <Container className="create-department-container">
+        <Menu />
         <h4 className="title">Add a new department</h4>
         <fieldset onKeyDown={handleKeyPress}>
         

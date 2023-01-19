@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { createEmployee } from "../apiClient";
-import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getDepartmentById } from "../apiClient";
 import "../css/createEmployee.css";
 import { Employee } from "../models/employeeModel";
-import { MenuAddEmployee } from "./navbarAddEmployee";
+import { MenuAddEmployee } from "./navbarCreateEmployee";
 
 export const CreateEmployee = () => {
   const params = useParams();
@@ -177,7 +176,7 @@ export const CreateEmployee = () => {
   } else {
     return (
       <main className="create-employee-container">
-        <MenuAddEmployee departmentImage={departmentImage}/>
+        <MenuAddEmployee departmentImage={departmentImage} department_id={department_id} department_name={departmentName}/>
         <h4 className="title">Add employee to {departmentName}</h4>
         <fieldset onKeyDown={handleKeyPress}>
           <div className="create-employee-input">
@@ -317,14 +316,6 @@ export const CreateEmployee = () => {
           <p className="error">
             {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
           </p>
-        </div>
-
-        <div className="links">
-          <div>
-            <Link to={`/department/${department_id}`} className="link">
-              Back to {departmentName}
-            </Link>
-          </div>
         </div>
       </main>
     );

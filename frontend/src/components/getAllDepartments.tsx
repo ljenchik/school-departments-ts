@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import "../css/getAllDepartments.css";
 import { Container } from "react-bootstrap";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Menu } from "./navbar";
+import { Menu } from "./navbarDefault";
 
 export const GetAllDepartments = () => {
   const [departments, setDepartments] = useState<any>([]);

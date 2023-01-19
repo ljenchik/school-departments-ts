@@ -5,7 +5,7 @@ import { GetAllEmployees } from './components/getAllEmployees';
 import { GetDepartmentById } from './components/getDepartmentById';
 import { CreateDepartment } from './components/createDepartment';
 import { UpdateDepartment } from './components/updateDepartment';
-import { Menu } from './components/navbar';
+import { Menu } from './components/navbarDefault';
 import { CreateEmployee } from "./components/createEmployee";
 import { GetEmployeeById } from "./components/getEmployeeById";
 import { UpdateEmployee } from "./components/updateEmployee";
