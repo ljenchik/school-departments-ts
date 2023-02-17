@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/school-departments-ts/static/css/main.9cdf69e8.css",
+    "main.js": "/school-departments-ts/static/js/main.2a8b69f6.js",
+    "static/js/787.cda612ba.chunk.js": "/school-departments-ts/static/js/787.cda612ba.chunk.js",
+    "static/media/defaultDepartmentImage.png": "/school-departments-ts/static/media/defaultDepartmentImage.6c19c8b27ca8b2a8b2ca.png",
+    "index.html": "/school-departments-ts/index.html",
+    "main.9cdf69e8.css.map": "/school-departments-ts/static/css/main.9cdf69e8.css.map",
+    "main.2a8b69f6.js.map": "/school-departments-ts/static/js/main.2a8b69f6.js.map",
+    "787.cda612ba.chunk.js.map": "/school-departments-ts/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9cdf69e8.css",
+    "static/js/main.2a8b69f6.js"
+  ]
+}
